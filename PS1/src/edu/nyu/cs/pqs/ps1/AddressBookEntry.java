@@ -17,42 +17,72 @@ public class AddressBookEntry {
     this.note = builder.note;
   }
 
+  /**
+   * @return
+   */
   public String getName() {
     return name;
   }
 
+  /**
+   * @return
+   */
   public String getPostalAddress() {
     return postalAddress;
   }
 
+  /**
+   * @return
+   */
   public String getPhoneNumber() {
     return phoneNumber;
   }
 
+  /**
+   * @return
+   */
   public String getEmailAddress() {
     return emailAddress;
   }
 
+  /**
+   * @return
+   */
   public String getNote() {
     return note;
   }
 
+  /**
+   * @param data
+   */
   public void setName(String data) {
     this.name = data;
   }
 
+  /**
+   * @param data
+   */
   public void setPostalAddress(String data) {
     this.postalAddress = data;
   }
 
+  /**
+   * @param data
+   */
   public void setPhoneNumber(String data) {
     this.phoneNumber = data;
   }
 
+  /**
+   * @param data
+   */
   public void setEmailAddress(String data) {
     this.emailAddress = data;
   }
 
+  /**
+   * @param data
+   */
   public void setNote(String data) {
     this.note = data;
   }
@@ -66,25 +96,44 @@ public class AddressBookEntry {
     private String emailAddress = "";
     private String note = "";
 
+    /**
+     * @param name
+     * @param phoneNumber
+     */
     public EntryBuilder(String name, String phoneNumber) {
       this.name = name;
       this.phoneNumber = phoneNumber;
     }
 
+    /**
+     * @return
+     */
     public AddressBookEntry build() {
       return new AddressBookEntry(this);
     }
 
+    /**
+     * @param postalAddress
+     * @return
+     */
     public EntryBuilder postalAddress(String postalAddress) {
       this.postalAddress = postalAddress;
       return this;
     }
 
+    /**
+     * @param emailAddress
+     * @return
+     */
     public EntryBuilder emailAddress(String emailAddress) {
       this.emailAddress = emailAddress;
       return this;
     }
 
+    /**
+     * @param note
+     * @return
+     */
     public EntryBuilder note(String note) {
       this.note = note;
       return this;
@@ -92,6 +141,9 @@ public class AddressBookEntry {
 
   }
 
+  /* (non-Javadoc)
+   * @see java.lang.Object#hashCode()
+   */
   @Override
   public int hashCode() {
     final int prime = 31;
@@ -104,6 +156,9 @@ public class AddressBookEntry {
     return result;
   }
 
+  /* (non-Javadoc)
+   * @see java.lang.Object#equals(java.lang.Object)
+   */
   @Override
   public boolean equals(Object obj) {
     if (this == obj)
@@ -141,6 +196,9 @@ public class AddressBookEntry {
     return true;
   }
 
+  /* (non-Javadoc)
+   * @see java.lang.Object#toString()
+   */
   @Override
   public String toString() {
     return "AddressBookEntry [name=" + name + ", phoneNumber=" + phoneNumber + ", postalAddress="
