@@ -11,6 +11,11 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+/**
+ * 
+ * @author Rachit
+ *
+ */
 public class AddressBook {
   // AddressBook variable to store all the Address Book Entries. Choosing HasSet due to the fast
   // retrieval time
@@ -20,26 +25,47 @@ public class AddressBook {
     addressBook = new HashSet<AddressBookEntry>();
   }
 
+  /**
+   * @return
+   */
   public static AddressBook create() {
     return new AddressBook();
   }
 
+  /**
+   * @return
+   */
   public HashSet<AddressBookEntry> getAddressBookEntries() {
     return addressBook;
   }
 
+  /**
+   * @param entries
+   */
   public void setAddressBookEntries(HashSet<AddressBookEntry> entries) {
     addressBook = entries;
   }
 
+  /**
+   * @param singleEntry
+   * @return
+   */
   public boolean addEntry(AddressBookEntry singleEntry) {
     return addressBook.add(singleEntry);
   }
 
+  /**
+   * @param singleEntry
+   * @return
+   */
   public boolean removeEntry(AddressBookEntry singleEntry) {
     return addressBook.remove(singleEntry);
   }
 
+  /**
+   * @param searchString
+   * @return
+   */
   public List<AddressBookEntry> searchByName(String searchString) {
     List<AddressBookEntry> result = new ArrayList<AddressBookEntry>();
     for (AddressBookEntry entry : addressBook) {
@@ -50,6 +76,10 @@ public class AddressBook {
     return result;
   }
 
+  /**
+   * @param searchString
+   * @return
+   */
   public List<AddressBookEntry> searchByPhoneNumber(String searchString) {
     List<AddressBookEntry> result = new ArrayList<AddressBookEntry>();
     for (AddressBookEntry entry : addressBook) {
@@ -60,6 +90,10 @@ public class AddressBook {
     return result;
   }
 
+  /**
+   * @param searchString
+   * @return
+   */
   public List<AddressBookEntry> searchByPostalAddress(String searchString) {
     List<AddressBookEntry> result = new ArrayList<AddressBookEntry>();
     for (AddressBookEntry entry : addressBook) {
@@ -70,6 +104,10 @@ public class AddressBook {
     return result;
   }
 
+  /**
+   * @param searchString
+   * @return
+   */
   public List<AddressBookEntry> searchByEmailAddress(String searchString) {
     List<AddressBookEntry> result = new ArrayList<AddressBookEntry>();
     for (AddressBookEntry entry : addressBook) {
@@ -80,6 +118,10 @@ public class AddressBook {
     return result;
   }
 
+  /**
+   * @param searchString
+   * @return
+   */
   public List<AddressBookEntry> searchByNote(String searchString) {
     List<AddressBookEntry> result = new ArrayList<AddressBookEntry>();
     for (AddressBookEntry entry : addressBook) {
@@ -90,6 +132,10 @@ public class AddressBook {
     return result;
   }
 
+  /**
+   * @param searchString
+   * @return
+   */
   public List<AddressBookEntry> searchAddressBookEntry(String searchString) {
     List<AddressBookEntry> result = new ArrayList<AddressBookEntry>();
     for (AddressBookEntry entry : addressBook) {
@@ -103,6 +149,9 @@ public class AddressBook {
 
   }
 
+  /* (non-Javadoc)
+   * @see java.lang.Object#toString()
+   */
   @Override
   public String toString() {
     StringBuilder addressBookString = new StringBuilder();
