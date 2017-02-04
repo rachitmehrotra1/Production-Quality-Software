@@ -1,5 +1,7 @@
 package edu.nyu.cs.pqs.ps1;
 
+import java.util.HashMap;
+
 /**
  * 
  * @author Rachit
@@ -214,6 +216,20 @@ public class AddressBookEntry {
   public String toString() {
     return "AddressBookEntry [name=" + name + ", phoneNumber=" + phoneNumber + ", postalAddress="
         + postalAddress + ", emailAddress=" + emailAddress + ", note=" + note + "]";
+  }
+
+  /**
+   * 
+   * @return
+   */
+  public HashMap<String, Object> toSaveFormat() {
+    HashMap<String, Object> entryInSaveFormat = new HashMap<String, Object>();
+    entryInSaveFormat.put("Name", this.getName());
+    entryInSaveFormat.put("Phone Number", this.getPhoneNumber());
+    entryInSaveFormat.put("Postal Address", this.getPostalAddress());
+    entryInSaveFormat.put("Email Address", this.getEmailAddress());
+    entryInSaveFormat.put("Note", this.getNote());
+    return entryInSaveFormat;
   }
 
 }
