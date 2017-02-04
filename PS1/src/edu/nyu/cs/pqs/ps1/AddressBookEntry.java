@@ -1,5 +1,10 @@
 package edu.nyu.cs.pqs.ps1;
 
+/**
+ * 
+ * @author Rachit
+ *
+ */
 public class AddressBookEntry {
   // Mandatory Entry
   private String name;
@@ -141,13 +146,15 @@ public class AddressBookEntry {
 
   }
 
-  /* (non-Javadoc)
+  /*
+   * (non-Javadoc)
+   * 
    * @see java.lang.Object#hashCode()
    */
   @Override
   public int hashCode() {
     final int prime = 31;
-    int result = 1;
+    int result = 7;
     result = prime * result + ((emailAddress == null) ? 0 : emailAddress.hashCode());
     result = prime * result + ((name == null) ? 0 : name.hashCode());
     result = prime * result + ((note == null) ? 0 : note.hashCode());
@@ -156,7 +163,9 @@ public class AddressBookEntry {
     return result;
   }
 
-  /* (non-Javadoc)
+  /*
+   * (non-Javadoc)
+   * 
    * @see java.lang.Object#equals(java.lang.Object)
    */
   @Override
@@ -196,7 +205,9 @@ public class AddressBookEntry {
     return true;
   }
 
-  /* (non-Javadoc)
+  /*
+   * (non-Javadoc)
+   * 
    * @see java.lang.Object#toString()
    */
   @Override
