@@ -3,6 +3,8 @@ package edu.nyu.cs.pqs.ps1;
 import java.util.HashMap;
 
 /**
+ * This is the entry class that stores the information of each single entry to the address book
+ * according to the given problem set
  * 
  * @author Rachit
  *
@@ -16,6 +18,11 @@ public class AddressBookEntry {
   private String emailAddress;
   private String note;
 
+  /**
+   * Private Constructor to create an AddressBook Entry using the encapsulated Entry Builder class
+   * 
+   * @param builder
+   */
   private AddressBookEntry(EntryBuilder builder) {
     this.name = builder.name;
     this.postalAddress = builder.postalAddress;
@@ -25,6 +32,8 @@ public class AddressBookEntry {
   }
 
   /**
+   * Getter for the name property of the entry
+   * 
    * @return
    */
   public String getName() {
@@ -32,6 +41,8 @@ public class AddressBookEntry {
   }
 
   /**
+   * Getter for the Postal Address property of the entry
+   * 
    * @return
    */
   public String getPostalAddress() {
@@ -39,6 +50,8 @@ public class AddressBookEntry {
   }
 
   /**
+   * Getter for the Phone Number property of the entry
+   * 
    * @return
    */
   public String getPhoneNumber() {
@@ -46,6 +59,8 @@ public class AddressBookEntry {
   }
 
   /**
+   * Getter for the Email Address property of the entry
+   * 
    * @return
    */
   public String getEmailAddress() {
@@ -53,6 +68,8 @@ public class AddressBookEntry {
   }
 
   /**
+   * Getter for the Note property of the entry
+   * 
    * @return
    */
   public String getNote() {
@@ -60,6 +77,8 @@ public class AddressBookEntry {
   }
 
   /**
+   * Setter for the Name property of the entry
+   * 
    * @param data
    */
   public void setName(String data) {
@@ -67,6 +86,8 @@ public class AddressBookEntry {
   }
 
   /**
+   * Setter for the Postal Address property of the entry
+   * 
    * @param data
    */
   public void setPostalAddress(String data) {
@@ -74,6 +95,8 @@ public class AddressBookEntry {
   }
 
   /**
+   * Setter for the Phone Number property of the entry
+   * 
    * @param data
    */
   public void setPhoneNumber(String data) {
@@ -81,6 +104,8 @@ public class AddressBookEntry {
   }
 
   /**
+   * Setter for the Email Address property of the entry
+   * 
    * @param data
    */
   public void setEmailAddress(String data) {
@@ -88,12 +113,18 @@ public class AddressBookEntry {
   }
 
   /**
+   * Setter for the Note property of the entry
+   * 
    * @param data
    */
   public void setNote(String data) {
     this.note = data;
   }
 
+  /**
+   * Custom Builder Class to create the AddressBookEntry object with Name and Phone Number as
+   * Mandatory Requirements
+   */
   public static class EntryBuilder {
     // Mandatory Entry
     private String name;
@@ -104,6 +135,8 @@ public class AddressBookEntry {
     private String note = "";
 
     /**
+     * Default Constructor for the EntryBuilder
+     * 
      * @param name
      * @param phoneNumber
      */
@@ -113,6 +146,9 @@ public class AddressBookEntry {
     }
 
     /**
+     * Build function to generate the AddressBookEntry object from the information given to Builder
+     * class
+     * 
      * @return
      */
     public AddressBookEntry build() {
@@ -120,6 +156,8 @@ public class AddressBookEntry {
     }
 
     /**
+     * Optional Constructor to input the postal address while building an Address Book Entry
+     * 
      * @param postalAddress
      * @return
      */
@@ -129,6 +167,8 @@ public class AddressBookEntry {
     }
 
     /**
+     * Optional Constructor to input the email address while building an Address Book Entry
+     * 
      * @param emailAddress
      * @return
      */
@@ -138,6 +178,8 @@ public class AddressBookEntry {
     }
 
     /**
+     * Optional Constructor to input the note while building an Address Book Entry
+     * 
      * @param note
      * @return
      */
@@ -148,10 +190,11 @@ public class AddressBookEntry {
 
   }
 
-  /*
-   * (non-Javadoc)
+  /**
+   * Automatically Override the hashCode function so that 2 objects of AddressBookEntry type can be
+   * differentiated when stored in a hash type storage like HashSet,HashTree etc
    * 
-   * @see java.lang.Object#hashCode()
+   * @return
    */
   @Override
   public int hashCode() {
@@ -165,10 +208,10 @@ public class AddressBookEntry {
     return result;
   }
 
-  /*
-   * (non-Javadoc)
+  /**
+   * Override the equals function to properly compare 2 objects of addressbook entry type
    * 
-   * @see java.lang.Object#equals(java.lang.Object)
+   * @return
    */
   @Override
   public boolean equals(Object obj) {
@@ -207,10 +250,10 @@ public class AddressBookEntry {
     return true;
   }
 
-  /*
-   * (non-Javadoc)
+  /**
+   * The modified toString function to print an entry details if required
    * 
-   * @see java.lang.Object#toString()
+   * @return
    */
   @Override
   public String toString() {
@@ -219,6 +262,8 @@ public class AddressBookEntry {
   }
 
   /**
+   * Function required to convert the addressbookentry with all its properties into a hashmap that
+   * can be used to store it to a xml,json etc file easily with every property linked to its value
    * 
    * @return
    */
