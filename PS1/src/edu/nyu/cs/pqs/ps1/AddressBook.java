@@ -226,7 +226,7 @@ public class AddressBook {
     try {
       Object parse = parser.parse(new FileReader(filePath));
       JSONArray entries = (JSONArray) parse;
-      addressBook = new HashSet<AddressBookEntry>();
+      HashSet<AddressBookEntry> tempStorage = new HashSet<AddressBookEntry>();
       for (Object entry : entries) {
         JSONObject currentEntry = (JSONObject) entry;
         AddressBookEntry currEntry =
@@ -235,8 +235,11 @@ public class AddressBook {
                     .postalAddress((String) currentEntry.get("Postal Address"))
                     .emailAddress((String) currentEntry.get("Email Address"))
                     .note((String) currentEntry.get("Note")).build();
-        addressBook.add(currEntry);
+        tempStorage.add(currEntry);
       }
+      // Using the setter for storing the values loaded from the file
+      // This is more efficient rather that straightly accessing the addressbook variable
+      this.setAddressBookEntries(tempStorage);
     } catch (Exception e) {
       e.printStackTrace();
     }
