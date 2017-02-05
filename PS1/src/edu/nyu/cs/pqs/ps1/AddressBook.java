@@ -12,6 +12,8 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 /**
+ * The main AddressBook class that stores the different entries and has various utility functions to
+ * help users to add,remove,save,load the entries
  * 
  * @author Rachit
  *
@@ -21,11 +23,16 @@ public class AddressBook {
   // retrieval time
   HashSet<AddressBookEntry> addressBook;
 
+  /**
+   * Private Constructor to initialize the HashSet for the addressBook
+   */
   private AddressBook() {
     addressBook = new HashSet<AddressBookEntry>();
   }
 
   /**
+   * Public constructor to return a new Addressbook
+   * 
    * @return
    */
   public static AddressBook create() {
@@ -33,6 +40,8 @@ public class AddressBook {
   }
 
   /**
+   * Getter to access all the stored Entries in HashSet
+   * 
    * @return
    */
   public HashSet<AddressBookEntry> getAddressBookEntries() {
@@ -40,6 +49,8 @@ public class AddressBook {
   }
 
   /**
+   * Setter to set all the entries in HasSet
+   * 
    * @param entries
    */
   public void setAddressBookEntries(HashSet<AddressBookEntry> entries) {
@@ -47,6 +58,8 @@ public class AddressBook {
   }
 
   /**
+   * Utility function to add a single entry to the addressbook
+   * 
    * @param singleEntry
    * @return
    */
@@ -55,6 +68,8 @@ public class AddressBook {
   }
 
   /**
+   * Utility function to remove a single entry from the addressbook
+   * 
    * @param singleEntry
    * @return
    */
@@ -63,6 +78,8 @@ public class AddressBook {
   }
 
   /**
+   * Search the address book using the Name property
+   * 
    * @param searchString
    * @return
    */
@@ -77,6 +94,8 @@ public class AddressBook {
   }
 
   /**
+   * Search the address book using the Phone Number property
+   * 
    * @param searchString
    * @return
    */
@@ -91,6 +110,8 @@ public class AddressBook {
   }
 
   /**
+   * Search the address book using the Postal Address property
+   * 
    * @param searchString
    * @return
    */
@@ -105,6 +126,8 @@ public class AddressBook {
   }
 
   /**
+   * Search the address book using the Email Address property
+   * 
    * @param searchString
    * @return
    */
@@ -119,6 +142,8 @@ public class AddressBook {
   }
 
   /**
+   * Search the address book using the Note property
+   * 
    * @param searchString
    * @return
    */
@@ -133,6 +158,9 @@ public class AddressBook {
   }
 
   /**
+   * Search the address book entries using a search String accross all the different types of
+   * information stored in an entry. A kind of Search All function
+   * 
    * @param searchString
    * @return
    */
@@ -149,8 +177,11 @@ public class AddressBook {
 
   }
 
-  /* (non-Javadoc)
-   * @see java.lang.Object#toString()
+  /**
+   * toString Function overriden to use StringBuilder which is the more efficient way to contruct a
+   * string which will display all the stored entries
+   * 
+   * @return
    */
   @Override
   public String toString() {
