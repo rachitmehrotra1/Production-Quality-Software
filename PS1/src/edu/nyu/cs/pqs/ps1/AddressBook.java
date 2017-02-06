@@ -33,7 +33,7 @@ public class AddressBook {
   /**
    * Public constructor to return a new Addressbook
    * 
-   * @return
+   * @return addressbook object
    */
   public static AddressBook create() {
     return new AddressBook();
@@ -42,7 +42,7 @@ public class AddressBook {
   /**
    * Getter to access all the stored Entries in HashSet
    * 
-   * @return
+   * @return hashset containing all the entries in the addressbook
    */
   public HashSet<AddressBookEntry> getAddressBookEntries() {
     return addressBook;
@@ -51,7 +51,7 @@ public class AddressBook {
   /**
    * Setter to set all the entries in HasSet
    * 
-   * @param entries
+   * @param entries all entries that you want to store in the addressbook as a set
    */
   public void setAddressBookEntries(HashSet<AddressBookEntry> entries) {
     addressBook = entries;
@@ -60,8 +60,8 @@ public class AddressBook {
   /**
    * Utility function to add a single entry to the addressbook
    * 
-   * @param singleEntry
-   * @return
+   * @param singleEntry A object of type addressbookentry that will be stored in the addressbook
+   * @return true if the addition was successful
    */
   public boolean addEntry(AddressBookEntry singleEntry) {
     return addressBook.add(singleEntry);
@@ -70,8 +70,8 @@ public class AddressBook {
   /**
    * Utility function to remove a single entry from the addressbook
    * 
-   * @param singleEntry
-   * @return
+   * @param singleEntry A object of type addressbookentry that will be removed from the addressbook
+   * @return true if the removal was successful
    */
   public boolean removeEntry(AddressBookEntry singleEntry) {
     return addressBook.remove(singleEntry);
@@ -80,8 +80,8 @@ public class AddressBook {
   /**
    * Search the address book using the Name property
    * 
-   * @param searchString
-   * @return
+   * @param searchString the value that will be used to search in name property
+   * @return list of all the entries that match the searchString
    */
   public List<AddressBookEntry> searchByName(String searchString) {
     List<AddressBookEntry> result = new ArrayList<AddressBookEntry>();
@@ -96,8 +96,8 @@ public class AddressBook {
   /**
    * Search the address book using the Phone Number property
    * 
-   * @param searchString
-   * @return
+   * @param searchString the value that will be used to search in phone number property
+   * @return list of all the entries that match the searchString
    */
   public List<AddressBookEntry> searchByPhoneNumber(String searchString) {
     List<AddressBookEntry> result = new ArrayList<AddressBookEntry>();
@@ -112,8 +112,8 @@ public class AddressBook {
   /**
    * Search the address book using the Postal Address property
    * 
-   * @param searchString
-   * @return
+   * @param searchString the value that will be used to search in postal address property
+   * @return list of all the entries that match the searchString
    */
   public List<AddressBookEntry> searchByPostalAddress(String searchString) {
     List<AddressBookEntry> result = new ArrayList<AddressBookEntry>();
@@ -128,8 +128,8 @@ public class AddressBook {
   /**
    * Search the address book using the Email Address property
    * 
-   * @param searchString
-   * @return
+   * @param searchString the value that will be used to search in email address property
+   * @return list of all the entries that match the searchString
    */
   public List<AddressBookEntry> searchByEmailAddress(String searchString) {
     List<AddressBookEntry> result = new ArrayList<AddressBookEntry>();
@@ -144,8 +144,8 @@ public class AddressBook {
   /**
    * Search the address book using the Note property
    * 
-   * @param searchString
-   * @return
+   * @param searchString the value that will be used to search in note property
+   * @return list of all the entries that match the searchString
    */
   public List<AddressBookEntry> searchByNote(String searchString) {
     List<AddressBookEntry> result = new ArrayList<AddressBookEntry>();
@@ -161,8 +161,8 @@ public class AddressBook {
    * Search the address book entries using a search String accross all the different types of
    * information stored in an entry. A kind of Search All function
    * 
-   * @param searchString
-   * @return
+   * @param searchString the value that will be used to search in the entire entry
+   * @return list of all the entries that match the searchString
    */
   public List<AddressBookEntry> searchAddressBookEntry(String searchString) {
     List<AddressBookEntry> result = new ArrayList<AddressBookEntry>();
@@ -181,7 +181,7 @@ public class AddressBook {
    * toString Function overriden to use StringBuilder which is the more efficient way to contruct a
    * string which will display all the stored entries
    * 
-   * @return
+   * @return String repesentation of the addressbook
    */
   @Override
   public String toString() {
@@ -197,7 +197,7 @@ public class AddressBook {
    * http://crunchify.com/how-to-write-json-object-to-file-in-java/ that teaches how to write json
    * objects from java using the JSON SIMPLE v1.1.1 library
    * 
-   * @param filePath
+   * @param filePath the path at which the file is to be stored
    */
   @SuppressWarnings("unchecked")
   public void saveAddressBook(String filePath) {
@@ -219,7 +219,7 @@ public class AddressBook {
    * http://crunchify.com/how-to-read-json-object-from-file-in-java/ using the JSON SIMPLE v1.1.1
    * library
    * 
-   * @param filePath
+   * @param filePath the path from which file is to be imported
    */
   public void loadAddressBook(String filePath) {
     JSONParser parser = new JSONParser();

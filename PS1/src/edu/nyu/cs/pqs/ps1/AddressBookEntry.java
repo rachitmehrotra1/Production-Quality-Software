@@ -21,7 +21,8 @@ public class AddressBookEntry {
   /**
    * Private Constructor to create an AddressBook Entry using the encapsulated Entry Builder class
    * 
-   * @param builder
+   * @param builder The entrybuilder that is used to create the entry
+   * @see AddressBook
    */
   private AddressBookEntry(EntryBuilder builder) {
     this.name = builder.name;
@@ -43,7 +44,7 @@ public class AddressBookEntry {
   /**
    * Getter for the Postal Address property of the entry
    * 
-   * @return
+   * @return the postal address
    */
   public String getPostalAddress() {
     return postalAddress;
@@ -52,7 +53,7 @@ public class AddressBookEntry {
   /**
    * Getter for the Phone Number property of the entry
    * 
-   * @return
+   * @return the phone number
    */
   public String getPhoneNumber() {
     return phoneNumber;
@@ -61,7 +62,7 @@ public class AddressBookEntry {
   /**
    * Getter for the Email Address property of the entry
    * 
-   * @return
+   * @return the email address
    */
   public String getEmailAddress() {
     return emailAddress;
@@ -70,7 +71,7 @@ public class AddressBookEntry {
   /**
    * Getter for the Note property of the entry
    * 
-   * @return
+   * @return the note
    */
   public String getNote() {
     return note;
@@ -79,7 +80,7 @@ public class AddressBookEntry {
   /**
    * Setter for the Name property of the entry
    * 
-   * @param data
+   * @param data The value that has to be set as name
    */
   public void setName(String data) {
     this.name = data;
@@ -88,7 +89,7 @@ public class AddressBookEntry {
   /**
    * Setter for the Postal Address property of the entry
    * 
-   * @param data
+   * @param data The value that has to be set as postal address
    */
   public void setPostalAddress(String data) {
     this.postalAddress = data;
@@ -106,7 +107,7 @@ public class AddressBookEntry {
   /**
    * Setter for the Email Address property of the entry
    * 
-   * @param data
+   * @param data The value that has to be set as email address
    */
   public void setEmailAddress(String data) {
     this.emailAddress = data;
@@ -115,7 +116,7 @@ public class AddressBookEntry {
   /**
    * Setter for the Note property of the entry
    * 
-   * @param data
+   * @param data The value that has to be set as note
    */
   public void setNote(String data) {
     this.note = data;
@@ -137,8 +138,8 @@ public class AddressBookEntry {
     /**
      * Default Constructor for the EntryBuilder
      * 
-     * @param name
-     * @param phoneNumber
+     * @param name The value that has to be set as name
+     * @param phoneNumber The value that has to be set as phone number
      */
     public EntryBuilder(String name, String phoneNumber) {
       this.name = name;
@@ -149,7 +150,7 @@ public class AddressBookEntry {
      * Build function to generate the AddressBookEntry object from the information given to Builder
      * class
      * 
-     * @return
+     * @return the addressbookentry object
      */
     public AddressBookEntry build() {
       return new AddressBookEntry(this);
@@ -158,8 +159,8 @@ public class AddressBookEntry {
     /**
      * Optional Constructor to input the postal address while building an Address Book Entry
      * 
-     * @param postalAddress
-     * @return
+     * @param postalAddress The value that has to be set as postal address
+     * @return the entry builder object
      */
     public EntryBuilder postalAddress(String postalAddress) {
       this.postalAddress = postalAddress;
@@ -169,8 +170,8 @@ public class AddressBookEntry {
     /**
      * Optional Constructor to input the email address while building an Address Book Entry
      * 
-     * @param emailAddress
-     * @return
+     * @param emailAddress The value that has to be set as email address
+     * @return the entry builder object
      */
     public EntryBuilder emailAddress(String emailAddress) {
       this.emailAddress = emailAddress;
@@ -180,8 +181,8 @@ public class AddressBookEntry {
     /**
      * Optional Constructor to input the note while building an Address Book Entry
      * 
-     * @param note
-     * @return
+     * @param note The value that has to be set as note
+     * @return the entry builder object
      */
     public EntryBuilder note(String note) {
       this.note = note;
@@ -194,7 +195,7 @@ public class AddressBookEntry {
    * Automatically Override the hashCode function so that 2 objects of AddressBookEntry type can be
    * differentiated when stored in a hash type storage like HashSet,HashTree etc
    * 
-   * @return
+   * @return integer hashcode value
    */
   @Override
   public int hashCode() {
@@ -211,7 +212,7 @@ public class AddressBookEntry {
   /**
    * Override the equals function to properly compare 2 objects of addressbook entry type
    * 
-   * @return
+   * @return true or false based on the result
    */
   @Override
   public boolean equals(Object obj) {
@@ -253,7 +254,7 @@ public class AddressBookEntry {
   /**
    * The modified toString function to print an entry details if required
    * 
-   * @return
+   * @return String representation of the entry
    */
   @Override
   public String toString() {
@@ -265,7 +266,7 @@ public class AddressBookEntry {
    * Function required to convert the addressbookentry with all its properties into a hashmap that
    * can be used to store it to a xml,json etc file easily with every property linked to its value
    * 
-   * @return
+   * @return HashMap of String,Object type that can be used for many purposes
    */
   public HashMap<String, Object> toSaveFormat() {
     HashMap<String, Object> entryInSaveFormat = new HashMap<String, Object>();
