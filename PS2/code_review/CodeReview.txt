@@ -10,7 +10,7 @@ Address.java :
 AddressBook.java :
 - Creating multiple copies of a single address by putting it in different maps( 4 to exact ) , which leads to a lot of data replication which is not a good design choice keeping scalability in mind (AddressBook.java:60)
 - Extra bank line ( example Line 96,104 etc )
-- The function remove address from map won’t work as expected since for example, if there are 2 people with the same address, this code AddressBook.java:102-108 might not work as expected and remove the other contact with same address. 
+- The function remove address from map won’t work as expected since for example, if there are 2 people with the same address, this code AddressBook.java:102-108 might not work as expected and remove the other contact with same address. Even if you just want to remove one of them.
 - The same case applies for all different searchMaps
 - Some collections, like HashSet, HashMap or HashTable use the hash code to store its data and to retrieve it. If you don't implement hashcode() and equals() in a consistent manner, then they will not function properly. Since hashcode() was not implemented in address.java addAddress() (AddressBook.java:176) and removeAddress() (AddressBook.java:186) might will not work as expected.
-- Extra level of encapsulation that was not required
+- Extra level of encapsulation that was not required. Example AddressBook.java:161 and 176
