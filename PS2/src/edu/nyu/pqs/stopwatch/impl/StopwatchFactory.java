@@ -13,9 +13,15 @@ import edu.nyu.pqs.stopwatch.api.Stopwatch;
  *
  */
 public class StopwatchFactory {
-
+  // Used a CopyOnWriteArrayList to store the stopWatchList since it's a thread safe version
+  // of the ArrayList
   private static final CopyOnWriteArrayList<Stopwatch> stopWatchList =
       new CopyOnWriteArrayList<Stopwatch>();
+  // Similarly, a CopyOnWriteArraySet to store the usedID's , which are used to check if the
+  // Id's already exist,while creating new Stopwatch Object. The main purpose of creating a
+  // seperate usedIds Array was that at many times, the stopwatch could be in the process of
+  // being used by another thread, and creating another new StopwatchObject should not wait
+  // for all existing Stopewatch Object's getId() method to be called to check if Id exists.
   private static final CopyOnWriteArraySet<String> usedIds = new CopyOnWriteArraySet<String>();
   private static final Object lock = new Object();
 

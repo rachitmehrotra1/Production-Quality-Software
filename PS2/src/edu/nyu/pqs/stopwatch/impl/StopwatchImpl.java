@@ -8,6 +8,10 @@ import edu.nyu.pqs.stopwatch.api.Stopwatch;
 import edu.nyu.pqs.stopwatch.api.StopwatchState;
 
 /**
+ * The StopwatchImpl is a thread safe class that creates stopwatch objects for use in timing
+ * tasks.The Stopwatch objects support the typical operations of a physical stopwatch: start, 
+ * stop,restart, and the recording of laps. Different threads can share a single stopwatch object and
+ * safely call any of the stopwatch methods.
  * 
  * @author Rachit
  *
@@ -20,6 +24,12 @@ public class StopwatchImpl implements Stopwatch {
   private List<Long> lapTimes;
   private long startTime;
 
+  /**
+   * Default Constructor that can be used to create the StopwatchImpl Object, with initial 
+   * startTime set to 0 and state set to RESET
+   * 
+   * @param id
+   */
   public StopwatchImpl(String id) {
     this.id = id;
     stopwatchState = StopwatchState.RESET;
@@ -55,7 +65,6 @@ public class StopwatchImpl implements Stopwatch {
       long lapTime = currentTime - startTime;
       lapTimes.add(lapTime);
       startTime = currentTime;
-
     }
   }
 
@@ -67,7 +76,6 @@ public class StopwatchImpl implements Stopwatch {
       }
       lap();
       stopwatchState = StopwatchState.STOP;
-
     }
   }
 
@@ -76,7 +84,6 @@ public class StopwatchImpl implements Stopwatch {
     synchronized (lock) {
       lapTimes.clear();
       stopwatchState = StopwatchState.RESET;
-
     }
   }
 
@@ -87,6 +94,9 @@ public class StopwatchImpl implements Stopwatch {
     }
   }
 
+  /**
+   * HashCode method depends on the id, since it's a unique value of stopwatch
+   */
   @Override
   public int hashCode() {
     final int prime = 31;
@@ -97,6 +107,9 @@ public class StopwatchImpl implements Stopwatch {
     }
   }
 
+  /**
+   * Equals method uses the id to differentiate since it's unique
+   */
   @Override
   public boolean equals(Object obj) {
     if (this == obj) {
@@ -106,13 +119,15 @@ public class StopwatchImpl implements Stopwatch {
       return false;
     }
     StopwatchImpl other = (StopwatchImpl) obj;
-
     if (!id.equals(other.id)) {
       return false;
     }
     return true;
   }
 
+  /**
+   * Override the toString method using builders to display the lap times of stopwatch
+   */
   @Override
   public String toString() {
     StringBuffer output = new StringBuffer();
