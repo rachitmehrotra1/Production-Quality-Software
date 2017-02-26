@@ -33,7 +33,7 @@ public class StopwatchImpl implements Stopwatch {
   }
 
   @Override
-  public void start() {
+  public void start() throws IllegalStateException {
     synchronized (lock) {
       if (stopwatchState == StopwatchState.RUNNING) {
         throw new IllegalStateException("Id:" + id + " is already running");
@@ -46,7 +46,7 @@ public class StopwatchImpl implements Stopwatch {
   }
 
   @Override
-  public void lap() {
+  public void lap() throws IllegalStateException {
     synchronized (lock) {
       if (stopwatchState != StopwatchState.RUNNING) {
         throw new IllegalStateException("Id:" + id + " is not running!");
@@ -60,7 +60,7 @@ public class StopwatchImpl implements Stopwatch {
   }
 
   @Override
-  public void stop() {
+  public void stop() throws IllegalStateException {
     synchronized (lock) {
       if (stopwatchState != StopwatchState.RUNNING) {
         throw new IllegalStateException("Id:" + id + " is not running!");
