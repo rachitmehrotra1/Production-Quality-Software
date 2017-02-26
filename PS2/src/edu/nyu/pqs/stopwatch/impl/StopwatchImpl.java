@@ -13,7 +13,7 @@ import edu.nyu.pqs.stopwatch.api.StopwatchState;
  *
  */
 public class StopwatchImpl implements Stopwatch {
-  
+
   private final String id;
   private StopwatchState stopwatchState;
   private Object lock = new Object();
@@ -21,10 +21,10 @@ public class StopwatchImpl implements Stopwatch {
   private long startTime;
 
   public StopwatchImpl(String id) {
-    this.id=id;
+    this.id = id;
     stopwatchState = StopwatchState.RESET;
     lapTimes = new LinkedList<Long>();
-    startTime=0;
+    startTime = 0;
   }
 
   @Override
@@ -35,11 +35,11 @@ public class StopwatchImpl implements Stopwatch {
   @Override
   public void start() {
     synchronized (lock) {
-      if (stopwatchState == StopwatchState.RUNNING){
-        throw new IllegalStateException("Id:"+id+" is already running");
+      if (stopwatchState == StopwatchState.RUNNING) {
+        throw new IllegalStateException("Id:" + id + " is already running");
       }
-      if (lapTimes.size()==0){
-        startTime =System.currentTimeMillis();
+      if (lapTimes.size() == 0) {
+        startTime = System.currentTimeMillis();
       }
       stopwatchState = StopwatchState.RUNNING;
     }
@@ -47,44 +47,88 @@ public class StopwatchImpl implements Stopwatch {
 
   @Override
   public void lap() {
-    synchronized(lock){
-      if(stopwatchState != StopwatchState.RUNNING){
-        throw new IllegalStateException("Id:"+id+" is not running!");
+    synchronized (lock) {
+      if (stopwatchState != StopwatchState.RUNNING) {
+        throw new IllegalStateException("Id:" + id + " is not running!");
       }
       long currentTime = System.currentTimeMillis();
-      long lapTime = currentTime - startTime ;
+      long lapTime = currentTime - startTime;
       lapTimes.add(lapTime);
       startTime = currentTime;
-      
+
     }
   }
 
   @Override
   public void stop() {
-    synchronized(lock){
-      if(stopwatchState != StopwatchState.RUNNING){
-        throw new IllegalStateException("Id:"+id+" is not running!");
+    synchronized (lock) {
+      if (stopwatchState != StopwatchState.RUNNING) {
+        throw new IllegalStateException("Id:" + id + " is not running!");
       }
       lap();
       stopwatchState = StopwatchState.STOP;
-      
+
     }
   }
 
   @Override
   public void reset() {
-    synchronized(lock){
+    synchronized (lock) {
       lapTimes.clear();
       stopwatchState = StopwatchState.RESET;
-      
+
     }
   }
 
   @Override
   public List<Long> getLapTimes() {
-    synchronized (lock){
+    synchronized (lock) {
       return Collections.unmodifiableList(lapTimes);
     }
+  }
+
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 13;
+    synchronized (lock) {
+      result = prime * result + ((id == null) ? 0 : id.hashCode());
+      return result;
+    }
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null) {
+      return false;
+    }
+    StopwatchImpl other = (StopwatchImpl) obj;
+
+    if (!id.equals(other.id)) {
+      return false;
+    }
+    return true;
+  }
+
+  @Override
+  public String toString() {
+    StringBuffer output = new StringBuffer();
+    output.append("Stopwatch " + this.id + ": \n");
+    synchronized (lock) {
+      if (lapTimes.isEmpty()) {
+        output.append("Zero Laps recorded\n");
+      } else {
+        int lapNumber = 0;
+        for (long lap : lapTimes) {
+          lapNumber++;
+          output.append("Lap " + lapNumber + ": " + lap + " milliseconds\n");
+        }
+      }
+    }
+    return output.toString();
   }
 
 }
