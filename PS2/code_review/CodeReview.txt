@@ -1,6 +1,7 @@
 - Make package name a bit more descriptive
 
 Address.java :
+- The author FORGOT to add “email address” as a component to the Address class as instructed in the problem statement.
 - The author made getters and setters to set the value of the Address Entry, which makes it prone to changes using the setters and thus not avoiding mutability.
 - Author does not use builder class to create the address object which is considered to be the best practice in these types of classes
 - The author failed to override the hash code function which is required in the case these address objects are ever being stored in a hash type of object example hashmap or hashset
