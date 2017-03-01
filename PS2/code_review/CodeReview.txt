@@ -1,4 +1,4 @@
-- Make package name a bit more descriptive
+- Make package name a bit more descriptive something like nyu.pqs.ps1.addressbook
 
 Address.java :
 - The author FORGOT to add “email address” as a component to the Address class as instructed in the problem statement.
