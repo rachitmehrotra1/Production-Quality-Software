@@ -11,6 +11,7 @@ Address.java :
 - Forgot to write the annotation of @Override over the equals method. (Address.java:133)
 
 AddressBook.java :
+- The javadocs for the addressbook class are very minimal and do not explain the functionality of the class. It should explain the features and functionality the API provides at least. AddressBook.java:19
 - Creating multiple copies of a single address by putting it in different maps( 4 to exact ) , which leads to a lot of data replication which is not a good design choice keeping scalability in mind (AddressBook.java:60)
 - Avoid Mutability by making addresses i.e a list of Address final ( AddressBook.java:25)
 - Extra bank line ( example Line 96,104 etc )
