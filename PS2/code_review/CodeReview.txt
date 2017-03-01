@@ -7,6 +7,7 @@ Address.java :
 - It is a good practice to override the toString() function
 - No null checking in any of the setters (Line 67,75,83,91)
 - Extra blank lines (Example Line 118,135,142 )
+- Forgot to write the annotation of @Override over the equals method. (Address.java:133)
 
 AddressBook.java :
 - Creating multiple copies of a single address by putting it in different maps( 4 to exact ) , which leads to a lot of data replication which is not a good design choice keeping scalability in mind (AddressBook.java:60)
