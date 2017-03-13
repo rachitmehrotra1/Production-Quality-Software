@@ -43,9 +43,9 @@ public class EntryTest {
 
   @Test
   public void testEquals_positive() {
-    Entry testEntry = new Entry.EntryBuilder("John Doe", "0123456789")
-        .emailAddress("johndoe@gmail.com")
-        .postalAddress("APT 3 , Test Ave , Jersey City , NJ , 07306").note("Test Note").build();
+    Entry testEntry =
+        new Entry.EntryBuilder("John Doe", "0123456789").emailAddress("johndoe@gmail.com")
+            .postalAddress("APT 3 , Test Ave , Jersey City , NJ , 07306").note("Test Note").build();
     assertEquals("The two entries were not equal", testEntry, entry);
   }
 
@@ -55,9 +55,9 @@ public class EntryTest {
   @Test
   public void testEquals_negative() {
     // Different Name
-    Entry testEntry = new Entry.EntryBuilder("Jane Doe", "0123456789")
-        .emailAddress("johndoe@gmail.com")
-        .postalAddress("APT 3 , Test Ave , Jersey City , NJ , 07306").note("Test Note").build();
+    Entry testEntry =
+        new Entry.EntryBuilder("Jane Doe", "0123456789").emailAddress("johndoe@gmail.com")
+            .postalAddress("APT 3 , Test Ave , Jersey City , NJ , 07306").note("Test Note").build();
     assertFalse("Two entries should not be equal - Different Name", testEntry.equals(entry));
 
     // Different Phone Number
@@ -73,8 +73,7 @@ public class EntryTest {
 
     // Different Address
     testEntry = new Entry.EntryBuilder("John Doe", "0123456789").emailAddress("johndoe@gmail.com")
-        .postalAddress("APT 3 , Test Ave , Houdson county , NJ , 07306").note("Test Note")
-        .build();
+        .postalAddress("APT 3 , Test Ave , Houdson county , NJ , 07306").note("Test Note").build();
     assertFalse("Two entries should not be equal - Different Address", testEntry.equals(entry));
 
     // Different Note
@@ -105,6 +104,32 @@ public class EntryTest {
     entry = new Entry.EntryBuilder(null, null).build();
     Entry testEntry = new Entry.EntryBuilder(null, null).build();
     assertTrue("Two null Entry objects should be equal", entry.equals(testEntry));
+  }
+
+  @Test
+  public void testHashCode_positive() {
+    Entry testEntry =
+        new Entry.EntryBuilder("John Doe", "0123456789").emailAddress("johndoe@gmail.com")
+            .postalAddress("APT 3 , Test Ave , Jersey City , NJ , 07306").note("Test Note").build();
+    assertTrue("The hashcode of two equal objects should not be equal",
+        entry.hashCode() == testEntry.hashCode());
+  }
+
+  @Test
+  public void testHashCode_negative() {
+    Entry testEntry =
+        new Entry.EntryBuilder("Jane Doe", "0123456789").emailAddress("johndoe@gmail.com")
+            .postalAddress("APT 3 , Test Ave , Jersey City , NJ , 07306").note("Test Note").build();
+    assertFalse("The hashcode of two unequal objects should not be equal",
+        entry.hashCode() == testEntry.hashCode());
+  }
+
+  @Test
+  public void testToString() {
+    String expectedOutput =
+        "John Doe;0123456789;APT 3 , Test Ave , Jersey City , NJ , 07306;johndoe@gmail.com;Test Note";
+    assertEquals("To String of Entry should match the output expected", entry.toString(),
+        expectedOutput);
   }
 
 }
