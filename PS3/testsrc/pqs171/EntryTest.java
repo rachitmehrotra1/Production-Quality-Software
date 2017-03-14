@@ -175,8 +175,7 @@ public class EntryTest {
     assertFalse("Equals of a null Entry with any other entry with some value should be false",
         testEntry.equals(entry));
     // To test the flow control where calling object has values , and some values of the parameter
-    // of
-    // equals are null
+    // of equals are null
     entry = new Entry.EntryBuilder(null, null).emailAddress(null).postalAddress(null).note(null)
         .build();
     testEntry = new Entry.EntryBuilder(null, null).emailAddress("random@gmail.com")
