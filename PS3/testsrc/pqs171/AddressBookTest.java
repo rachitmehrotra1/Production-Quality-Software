@@ -2,6 +2,8 @@ package pqs171;
 
 import static org.junit.Assert.*;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import org.junit.After;
@@ -10,7 +12,8 @@ import org.junit.Test;
 
 /**
  * Unit Test Class for AddressBook
- * 
+ * Code Coverage : 81% , since the IOExceptions and finally block with try-catch cannot be
+ * unit tested.
  * @author Rachit
  *
  */
@@ -163,6 +166,53 @@ public class AddressBookTest {
     assertEquals("The output of to string should be same as Expected output", expectedOutput,
         addressBook.toString());
   }
+
+  /*
+   * The java docs for readBookFromFile says that it would load the entries on the addresbook
+   * object. But according to the code that doesn't happen.Instead It returns ArrayList<Entries> SO
+   * to test if readBookFromFile actually reads entries. We'll extract the entries from file. And
+   * see if the entries match what we had put in them in the setup
+   */
+  @Test
+  public void testSavetoFileAndReadFromFile() {
+    try {
+      addressBook.saveBookToFile("output.txt");
+      ArrayList<Entry> fileEntries = addressBook.readBookFromFile("output.txt");
+      assertTrue(
+          "Entries extracted from file should be equal to the entries in addressBook initially",
+          fileEntries.size() == 4);
+      assertTrue("Entries exacted from file should contain testEntry1",
+          fileEntries.contains(testEntry1));
+      assertTrue("Entries exacted from file should contain testEntry2",
+          fileEntries.contains(testEntry2));
+      assertTrue("Entries exacted from file should contain testEntry3",
+          fileEntries.contains(testEntry3));
+      assertTrue("Entries exacted from file should contain testEntry4",
+          fileEntries.contains(testEntry4));
+
+    } catch (Exception c) {
+      fail("Exception found in saving/loading data");
+    }
+  }
   
-  
+  /*
+   * This test fails because even though the author has a try-catch block in their 
+   * readBookFromFile method, all they are doing is printing a stack trace and not 
+   * throwing the Eception to the parent level. Thus failing this test. That catch
+   * statement can be modified to :
+   * catch (FileNotFoundException e) {
+            e.printStackTrace();
+            throw new FileNotFoundException();
+        }
+   * And that would make this test work.
+   */
+  @Test
+  public void testReadFromFile_invalidFile(){
+      try {
+         addressBook.readBookFromFile("randomfile");
+        fail("FileNotFound Exception was not thrown while reading from non existant file");
+      } catch (Exception ignoredException) {
+      }
+  }
+
 }
