@@ -11,9 +11,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Unit Test Class for AddressBook
- * Code Coverage : 81% , since the IOExceptions and finally block with try-catch cannot be
- * unit tested.
+ * Unit Test Class for AddressBook Code Coverage : 84.1% , since the IOExceptions and finally block
+ * with try-catch cannot be unit tested.
+ * 
  * @author Rachit
  *
  */
@@ -194,25 +194,58 @@ public class AddressBookTest {
       fail("Exception found in saving/loading data");
     }
   }
-  
+
   /*
-   * This test fails because even though the author has a try-catch block in their 
-   * readBookFromFile method, all they are doing is printing a stack trace and not 
-   * throwing the Eception to the parent level. Thus failing this test. That catch
-   * statement can be modified to :
-   * catch (FileNotFoundException e) {
-            e.printStackTrace();
-            throw new FileNotFoundException();
-        }
-   * And that would make this test work.
+   * This test fails because even though the author has a try-catch block in their readBookFromFile
+   * method, all they are doing is printing a stack trace and not throwing the Eception to the
+   * parent level. Thus failing this test. That catch statement can be modified to : catch
+   * (FileNotFoundException e) { e.printStackTrace(); throw new FileNotFoundException(); } And that
+   * would make this test work.
    */
   @Test
-  public void testReadFromFile_invalidFile(){
-      try {
-         addressBook.readBookFromFile("randomfile");
-        fail("FileNotFound Exception was not thrown while reading from non existant file");
-      } catch (Exception ignoredException) {
-      }
+  public void testReadFromFile_invalidFile() {
+    try {
+      addressBook.readBookFromFile("randomfile");
+      fail("FileNotFound Exception was not thrown while reading from non existant file");
+    } catch (Exception ignoredException) {
+    }
   }
 
+  @Test
+  public void testWriteBooktoFile_nullFilePath() {
+    try {
+      addressBook.saveBookToFile(null);
+      fail("Expected exception was not thrown");
+    } catch (Exception ignoredException) {
+      assertTrue("Null Pointer Exception was not thrown",
+          ignoredException instanceof NullPointerException);
+    }
+  }
+
+  /*
+   * This test fails because even though AddressBook.java:104 throws a FileNotFoundException the
+   * author neither catch that exception now did throw the exception to the called thus failing the
+   * test. This can be easily fixed by adding a "throw FileNotFoundException" to the function
+   * definition
+   */
+  @Test
+  public void testWriteBookToFile_emptyStringAsFile() {
+    try {
+      addressBook.saveBookToFile("");
+      fail("Expected exception was not thrown");
+    } catch (Exception ignoredException) {
+      assertTrue("FileNotFoundException was not thrown",
+          ignoredException instanceof FileNotFoundException);
+    }
+  }
+
+  @Test()
+  public void testReadfromFile_nullFilePath() {
+    try {
+      addressBook.readBookFromFile(null);
+      fail("Expected exception was not thrown");
+    } catch (Exception e) {
+      assertTrue("NullPointerException was not thrown", e instanceof NullPointerException);
+    }
+  }
 }
