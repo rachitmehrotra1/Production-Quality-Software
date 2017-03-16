@@ -224,7 +224,7 @@ public class AddressBookTest {
 
   /*
    * This test fails because even though AddressBook.java:104 throws a FileNotFoundException the
-   * author neither catch that exception now did throw the exception to the called thus failing the
+   * author neither catch that exception nor did throw the exception to the caller thus failing the
    * test. This can be easily fixed by adding a "throw FileNotFoundException" to the function
    * definition
    */
