@@ -2,12 +2,15 @@ StopwatchFactory.java
 - The author has used Collections.synchronizedList , to convert an ArrayList to a thread safe object. A much better alternative is to use CopyOnWriteArrayList , as it exists as a thread safe version of array list which is a part of java.util.concurrent. Also syncList has a very high read overhead.
 - Extra Blank lines, need to format the code once done coding. Example StopwatchFactory.java:39
 - The author is using synchronized i,e locking on the stopwatches array list itself. Which in terms of design choice is not the best practice. It’s much better to create a lock object like it’s done in the other timer.java file and use it. Also this shows inconsistency in design choices.
+- StopwatchFactory:17 , the stopwatches array list should be final to make sure it’s only initiated once and thus preventing anything from overwriting it.
+
 
 Timer.java
 - Equals function misses a very important check , i.e to insure that the parameter is an object of Timer class itself. The author has typecast in parameter of Equals to timer which is not a good way of handling it. And will result in equals not working as it is supposed to in some border cases. Where timer obj is being equated to another non-timer object. This can be easily fixed using :
 	if(getClass() != obj.getClass())
 	return false
-- the toString function doesn’t display all the information of the timer object. It misses out a very key information that is lap times.
+- the toString function doesn’t display all the information of the timer object. It misses out a very key information that is lap times. And also it’s important to do that process of reading the lap time and adding them to the toString return sting in a synchronized block using the lock.
+- the lock object could be made final, but again it can be considered as personal preference
 - It is a good practice to use ENUM in cases like these where the state of the object(a Stopwatch) will be fixed i.e STOP,RUNNING,RESET. This instead of using a boolean running using an ENUM would have been better.
 - In terms of code structure. Some functions can be restructured to follow best practices. For example :
 public void stop() {
@@ -42,3 +45,4 @@ long current = System.currentTimeMillis();
 setStartTime(current);
 }
 This would make the lap() function work according to the javadoc. Since StartTime would be set to time at which start() was called only when it’s the very first lap.
+- In the stop() function (Timer.java:90,91) do the exact same thing as lap(), thus calling the lap() function would be a better approach
