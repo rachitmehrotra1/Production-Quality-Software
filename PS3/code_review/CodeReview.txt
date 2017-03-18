@@ -1,2 +1,44 @@
-Please enter your code review in this file as plain text
-and make sure to include it when you commit your project.
+StopwatchFactory.java
+- The author has used Collections.synchronizedList , to convert an ArrayList to a thread safe object. A much better alternative is to use CopyOnWriteArrayList , as it exists as a thread safe version of array list which is a part of java.util.concurrent. Also syncList has a very high read overhead.
+- Extra Blank lines, need to format the code once done coding. Example StopwatchFactory.java:39
+- The author is using synchronized i,e locking on the stopwatches array list itself. Which in terms of design choice is not the best practice. It’s much better to create a lock object like it’s done in the other timer.java file and use it. Also this shows inconsistency in design choices.
+
+Timer.java
+- Equals function misses a very important check , i.e to insure that the parameter is an object of Timer class itself. The author has typecast in parameter of Equals to timer which is not a good way of handling it. And will result in equals not working as it is supposed to in some border cases. Where timer obj is being equated to another non-timer object. This can be easily fixed using :
+	if(getClass() != obj.getClass())
+	return false
+- the toString function doesn’t display all the information of the timer object. It misses out a very key information that is lap times.
+- It is a good practice to use ENUM in cases like these where the state of the object(a Stopwatch) will be fixed i.e STOP,RUNNING,RESET. This instead of using a boolean running using an ENUM would have been better.
+- In terms of code structure. Some functions can be restructured to follow best practices. For example :
+public void stop() {
+    synchronized (lock) {
+      if (isRunning()) {
+        long current = System.currentTimeMillis();
+        lapTimes.add(current - getStartTime());
+        setRunning(false);
+      } else {
+        throw new IllegalStateException("Stopwatch isn't running currently");
+      }
+    }
+  }
+Now, putting the entire function in a if statement is generally not a good coding practice. This code can easily be restructured to bring out more clarity 
+Better way :
+public void stop() {
+    synchronized (lock) {
+      if (!isRunning()) {
+		throw new IllegalStateException("Stopwatch isn't running currently");
+	}
+        long current = System.currentTimeMillis();
+        lapTimes.add(current - getStartTime());
+        setRunning(false);
+    }
+  }
+- Hashcode function uses “newID = Long.parseLong(id.substring(2))” , now for a 3 digit id for example “299” and “399” this dashcode function will return the SAME OUTPUT. Which is wrong and not what expected. Also on id’s which are less than 3 digits. The hash code function will throw a NumberFormatException on this line. Thus making the hashCode implementation not correct.
+- According to the java docs. This is what lap() is supposed to do : 
+Stores the time elapsed since the last time lap() was called or since start() was called if this is the first lap. 
+This implementation of lap() does not follow this definition since at Start() the startTime is set to current time. Thus in the sequence where stopwatch is used in order.  lap() , stop()( this calls lap() bcz of the logic ), start() , lap() . This will store the wrong value in last time lap() is called, since lap() is supposed to record the time difference between previous lap() and this lap() since this is not the first lap for this stopwatch. But instead this will store the time between start() and lap(). There is a very easy fix to this. IN the start function. The author could change the code to 
+if(lapTimes.isEmpty()){
+long current = System.currentTimeMillis();
+setStartTime(current);
+}
+This would make the lap() function work according to the javadoc. Since StartTime would be set to time at which start() was called only when it’s the very first lap.
