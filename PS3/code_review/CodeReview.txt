@@ -9,6 +9,7 @@ Timer.java
 - Equals function misses a very important check , i.e to insure that the parameter is an object of Timer class itself. The author has typecast in parameter of Equals to timer which is not a good way of handling it. And will result in equals not working as it is supposed to in some border cases. Where timer obj is being equated to another non-timer object. This can be easily fixed using :
 	if(getClass() != obj.getClass())
 	return false
+- Equals method does not check for NULL , will cause a NPE if null is sent
 - the toString function doesn’t display all the information of the timer object. It misses out a very key information that is lap times. And also it’s important to do that process of reading the lap time and adding them to the toString return sting in a synchronized block using the lock.
 - the lock object could be made final, but again it can be considered as personal preference
 - It is a good practice to use ENUM in cases like these where the state of the object(a Stopwatch) will be fixed i.e STOP,RUNNING,RESET. This instead of using a boolean running using an ENUM would have been better.
