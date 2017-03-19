@@ -1,5 +1,5 @@
 StopwatchFactory.java
-- The author has used Collections.synchronizedList , to convert an ArrayList to a thread safe object. A much better alternative is to use CopyOnWriteArrayList , as it exists as a thread safe version of array list which is a part of java.util.concurrent. Also syncList has a very high read overhead.
+- The author has used Collections.synchronizedList , to convert an ArrayList to a thread safe object. An alternative is to use CopyOnWriteArrayList , as it exists as a thread safe version of array list which is a part of java.util.concurrent. Also synchronizedList has a very high read overhead. This is just a suggestion that the author can look into.w
 - Extra Blank lines, need to format the code once done coding. Example StopwatchFactory.java:39
 - The author is using synchronized i,e locking on the stopwatches array list itself. Which in terms of design choice is not the best practice. It’s much better to create a lock object like it’s done in the other timer.java file and use it. Also this shows inconsistency in design choices.
 - StopwatchFactory:17 , the stopwatches array list should be final to make sure it’s only initiated once and thus preventing anything from overwriting it.
@@ -47,3 +47,6 @@ setStartTime(current);
 }
 This would make the lap() function work according to the javadoc. Since StartTime would be set to time at which start() was called only when it’s the very first lap.
 - In the stop() function (Timer.java:90,91) do the exact same thing as lap(), thus calling the lap() function would be a better approach
+- The Timer class should be package private so that a Timer can only be created using stopwatch factory. And thus the access specifier for the constructor should also be package private
+- There could be several stop watches with the same name but different time laps, thus this equals method would make them all Equal. Thus another creating another loophole in the equals method
+- The lock initialization doesn’t necessarily has to be in the constructor as it’s not dependent on the argument thus can be moves to the class member declaration. Same applies to the lapTimes ArrayList as well
