@@ -201,6 +201,8 @@ public class AddressBookTest {
    * parent level. Thus failing this test. That catch statement can be modified to : catch
    * (FileNotFoundException e) { e.printStackTrace(); throw new FileNotFoundException(); } And that
    * would make this test work.
+   * The second catch IO exception block is not reachable since FileNotFoundException is a subclass
+   * of IOexception
    */
   @Test
   public void testReadFromFile_invalidFile() {
