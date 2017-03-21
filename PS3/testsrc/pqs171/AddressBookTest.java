@@ -1,4 +1,4 @@
-package pqs171;
+  package pqs171;
 
 import static org.junit.Assert.*;
 
@@ -207,7 +207,9 @@ public class AddressBookTest {
     try {
       addressBook.readBookFromFile("randomfile");
       fail("FileNotFound Exception was not thrown while reading from non existant file");
-    } catch (Exception ignoredException) {
+    } catch (Exception e) {
+      assertTrue("FileNotFound Exception was not thrown",
+          e instanceof FileNotFoundException);
     }
   }
 
@@ -216,9 +218,9 @@ public class AddressBookTest {
     try {
       addressBook.saveBookToFile(null);
       fail("Expected exception was not thrown");
-    } catch (Exception ignoredException) {
+    } catch (Exception e) {
       assertTrue("Null Pointer Exception was not thrown",
-          ignoredException instanceof NullPointerException);
+          e instanceof NullPointerException);
     }
   }
 
@@ -233,9 +235,9 @@ public class AddressBookTest {
     try {
       addressBook.saveBookToFile("");
       fail("Expected exception was not thrown");
-    } catch (Exception ignoredException) {
+    } catch (Exception e) {
       assertTrue("FileNotFoundException was not thrown",
-          ignoredException instanceof FileNotFoundException);
+          e instanceof FileNotFoundException);
     }
   }
 
