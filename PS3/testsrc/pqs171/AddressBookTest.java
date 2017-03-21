@@ -11,7 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Unit Test Class for AddressBook Code Coverage : 84.1% , since the IOExceptions and finally block
+ * Unit Test Class for AddressBook Code Coverage : 84.4% , since the IOExceptions and finally block
  * with try-catch cannot be unit tested.
  * 
  * @author Rachit
