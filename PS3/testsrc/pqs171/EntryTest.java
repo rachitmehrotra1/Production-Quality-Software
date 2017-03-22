@@ -33,7 +33,6 @@ public class EntryTest {
   public void testEntry_nullName() {
     Entry testEntry = new Entry.EntryBuilder(null, "0123456789").build();
     assertNotNull("Name Should not be null", testEntry.getName());
-
   }
 
   /*
@@ -44,7 +43,6 @@ public class EntryTest {
   public void testEntry_nullPhoneNumber() {
     Entry testEntry = new Entry.EntryBuilder("John D", null).build();
     assertNotNull("Phone Number Should not be null", testEntry.getPhoneNumber());
-
   }
 
   @Test
@@ -193,7 +191,6 @@ public class EntryTest {
     testEntry = new Entry.EntryBuilder(null, null).emailAddress(null)
         .postalAddress("4th street,Manhattan").note(null).build();
     assertFalse("Objects are not equal", entry.equals(testEntry));
-
   }
 
 }
