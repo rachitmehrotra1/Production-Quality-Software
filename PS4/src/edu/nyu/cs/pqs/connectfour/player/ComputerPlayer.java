@@ -6,28 +6,28 @@ import edu.nyu.cs.pqs.connectfour.model.Model;
 import edu.nyu.cs.pqs.connectfour.model.ModelConstants;
 
 /**
- * Implementation of Player type, depicts a player controlled by a human
+ * Implementation of Player type, depicts a player controlled by a BOT
  * @author Rachit
  *
  */
-//TODO: EQUALS AND HASHCODE
-public class HumanPlayer implements Player {
+//TODO : EQUALS AND HASHCODE
+public class ComputerPlayer implements Player {
   
   /**
-   * Inner Builder class to make the HumanPlayer Object Immutable
+   * Inner Builder class to make the ComputerPlayer Object Immutable
    */
-  public static class HumanPlayerBuilder {
+  public static class ComputerPlayerBuilder {
     private final Color playerColor;
     
     /**
      * Builder Constructor
      */
-    public HumanPlayerBuilder(Color playerColor){
+    public ComputerPlayerBuilder(Color playerColor){
       this.playerColor = playerColor;
     }
     
-    public HumanPlayer build(){
-      return new HumanPlayer(this);
+    public ComputerPlayer build(){
+      return new ComputerPlayer(this);
     }
   }
   
@@ -35,10 +35,10 @@ public class HumanPlayer implements Player {
   private int moveCol;
   
   /**
-   * Private Human Player Contructor
+   * Private Computer Player Contructor
    * @param humanPlayerBuilder
    */
-  private HumanPlayer(HumanPlayerBuilder humanPlayerBuilder) {
+  private ComputerPlayer(ComputerPlayerBuilder humanPlayerBuilder) {
     this.playerColor=humanPlayerBuilder.playerColor;
   }
 
@@ -71,7 +71,7 @@ public class HumanPlayer implements Player {
 
   @Override
   public PlayerType getPlayerType() {
-    return PlayerType.HUMAN;
+    return PlayerType.COMPUTER;
   }
 
 }
