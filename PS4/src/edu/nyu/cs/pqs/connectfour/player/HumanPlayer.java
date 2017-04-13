@@ -1,62 +1,64 @@
 package edu.nyu.cs.pqs.connectfour.player;
 
 import java.awt.Color;
+import java.util.Objects;
 
 import edu.nyu.cs.pqs.connectfour.model.Model;
 import edu.nyu.cs.pqs.connectfour.model.ModelConstants;
 
 /**
  * Implementation of Player type, depicts a player controlled by a human
+ * 
  * @author Rachit
  *
  */
-//TODO: EQUALS AND HASHCODE
+// TODO: EQUALS AND HASHCODE
 public class HumanPlayer implements Player {
-  
+
   /**
    * Inner Builder class to make the HumanPlayer Object Immutable
    */
   public static class HumanPlayerBuilder {
     private final Color playerColor;
-    
+
     /**
      * Builder Constructor
      */
-    public HumanPlayerBuilder(Color playerColor){
+    public HumanPlayerBuilder(Color playerColor) {
       this.playerColor = playerColor;
     }
-    
-    public HumanPlayer build(){
+
+    public HumanPlayer build() {
       return new HumanPlayer(this);
     }
   }
-  
+
   private final Color playerColor;
   private int moveCol;
-  
+
   /**
    * Private Human Player Contructor
+   * 
    * @param humanPlayerBuilder
    */
   private HumanPlayer(HumanPlayerBuilder humanPlayerBuilder) {
-    this.playerColor=humanPlayerBuilder.playerColor;
+    this.playerColor = humanPlayerBuilder.playerColor;
   }
 
   @Override
   public void makeMove(Model model) {
-    if(model.equals(null)){
+    if (model.equals(null)) {
       throw new IllegalStateException("Game Model Not Initialized");
     }
-    // TODO call the model to make the move
-    
+    model.makeMove(playerColor, moveCol);
   }
 
   @Override
   public void setColMove(int col) {
-    if(col>ModelConstants.COLS||col<0){
+    if (col > ModelConstants.COLS || col < 0) {
       throw new IllegalArgumentException("Column out of bounds");
     }
-    this.moveCol=col;
+    this.moveCol = col;
   }
 
   @Override
@@ -72,6 +74,26 @@ public class HumanPlayer implements Player {
   @Override
   public PlayerType getPlayerType() {
     return PlayerType.HUMAN;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(playerColor.hashCode());
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj)
+      return true;
+    if (obj == null)
+      return false;
+    if (getClass() != obj.getClass())
+      return false;
+    HumanPlayer other = (HumanPlayer) obj;
+    if (!playerColor.equals(other.playerColor)){
+      return false;
+    }
+      return true;
   }
 
 }
