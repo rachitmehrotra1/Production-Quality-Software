@@ -5,8 +5,6 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.EventObject;
-
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -54,9 +52,6 @@ public class GameView implements Listener {
     // Create BoardPanels for Game Positions
     for (int i = 0; i < ModelConstants.ROWS; i++) {
       for (int j = 0; j < ModelConstants.COLS; j++) {
-        JPanel position = new JPanel();
-        position.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-        // boardPositionPanels[i][j]=position;
         boardPositionPanels[i][j] = new JLabel(ViewResources.getConnect4Disc(null));
         boardPanel.add(boardPositionPanels[i][j]);
       }
