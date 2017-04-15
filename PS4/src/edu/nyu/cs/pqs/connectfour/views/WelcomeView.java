@@ -70,6 +70,7 @@ public class WelcomeView {
   private void singlePlayerButtonPressed(){
     Model singlePlayerGame = Model.getModelInstance();
     new GameView(singlePlayerGame);
+    singlePlayerGame.gameStarted();
     singlePlayerGame.addPlayers(GameMode.SINGLE);
     welcomeFrame.setVisible(false);
   }
@@ -77,6 +78,7 @@ public class WelcomeView {
   private void multiPlayerButtonPressed(){
     Model multiPlayerGame = Model.getModelInstance();
     new GameView(multiPlayerGame);
+    multiPlayerGame.gameStarted();
     multiPlayerGame.addPlayers(GameMode.MULTIPLAYER);
     welcomeFrame.setVisible(false);
   }

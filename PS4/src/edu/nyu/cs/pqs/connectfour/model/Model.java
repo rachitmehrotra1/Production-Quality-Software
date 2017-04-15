@@ -88,19 +88,19 @@ public class Model {
   /**
    * Fires up a game started event to notify all the listeners/view that the game has started
    */
-  public void fireGameStartedEvent() {
+  private void fireGameStartedEvent() {
     for (Listener listener : listeners) {
       listener.gameStarted();
     }
   }
   
-  public void fireGameResetEvent() {
+  private void fireGameResetEvent() {
     for (Listener listener : listeners) {
       listener.gameReset();
     }
   }
 
-  public void fireAlertEvent(String message) {
+  private void fireAlertEvent(String message) {
     for (Listener listener : listeners) {
       listener.alert(message);
     }
@@ -111,7 +111,7 @@ public class Model {
    * 
    * @param color : The color that has won the game.
    */
-  public void fireGameWonEvent(Color color) {
+  private void fireGameWonEvent(Color color) {
     for (Listener listener : listeners) {
       listener.gameWon(color);
     }
@@ -121,7 +121,7 @@ public class Model {
    * Fires up a game tied event in the scenario where the baord is full and there is no spaces left
    * to play
    */
-  public void fireGameTiedEvent() {
+  private void fireGameTiedEvent() {
     for (Listener listener : listeners) {
       listener.gameTied();
     }
@@ -135,7 +135,7 @@ public class Model {
    * @param The column in which the disc was dropped
    * @param The color of the disc dropped
    */
-  public void fireMoveMadeEvent(int row, int column, Color color) {
+  private void fireMoveMadeEvent(int row, int column, Color color) {
     for (Listener listener : listeners) {
       listener.makeMove(row, column, color, gameMode);
     }
@@ -175,8 +175,113 @@ public class Model {
     return true;
   }
 
-  public boolean checkWinner(int discs, int column) {
-    // TODO Auto-generated method stub
+  private boolean checkWinner(int row, int column) {
+    if(didWinHorizontally(row,column)){
+      return true;
+    } else if (didWinVertically(row,column)){
+      return true;
+    } else if (didWinDiagonallyTopLeftToRightDown(row,column)){
+      return true;
+    } else if(didWinDiagonallyTopRightToLeftDown(row,column)){
+      return true;
+    }
+    return false;
+  }
+
+  private boolean didWinDiagonallyTopRightToLeftDown(int row, int column) {
+    int len = 0;
+    Color colorAtCheckPost=board[row][column];
+    //Go towards top right from the current position
+    for(int i = row,j=column ; i < ModelConstants.ROWS && j < ModelConstants.COLS ; i++ ,j++ ){
+        if(board[i][j] == colorAtCheckPost){
+          len++;
+        } else {
+          break;
+        }
+    }
+    //Go towards bottom left from current position (excluding the current position)
+    for(int i = row ,j=column ; i > 0 && j > 0; i-- , j--){
+        if(board[i-1][j-1] == colorAtCheckPost){
+          len++;
+        } else {
+          break;
+        }
+    }
+    if(len >= ModelConstants.winLength){
+      return true;
+    }
+    return false;
+  }
+
+  private boolean didWinDiagonallyTopLeftToRightDown(int row, int column) {
+    int len = 0;
+    Color colorAtCheckPost=board[row][column];
+    //Go towards top left from the current position
+    for(int i = row,j=column ; i < ModelConstants.ROWS && j >= 0 ; i++,j--){
+        if(board[i][j] == colorAtCheckPost){
+          len++;
+        }
+        else {
+          break;
+        }
+    }
+    //Go towards bottom right from current position (excluding the current position)
+    for(int i = row ,j=column ; i > 0 && j < ModelConstants.COLS; i--,j++ ){
+        if(board[i-1][j+1] == colorAtCheckPost){
+          len++;
+        } else {
+          break;
+        }
+    }
+    if(len >= ModelConstants.winLength){
+      return true;
+    }
+    return false;
+  }
+
+  private boolean didWinVertically(int row, int column) {
+    int len = 0;
+    int i = row;
+    Color colorAtCheckPos=board[row][column];
+    //Check toward the right from current position
+    while(i < ModelConstants.ROWS && board[i][column] == colorAtCheckPos){
+      len++;
+      i++;
+    }
+    //Reset to check position
+    i = row;
+    //Check towards left from the current position
+    while(i>0 && board[i-1][column] == colorAtCheckPos){
+      i--;
+      len++;
+    }
+    
+    if(len >= ModelConstants.winLength){
+      return true;
+    }
+    return false;
+  }
+
+  private boolean didWinHorizontally(int row, int column) {
+    int len = 0;
+    int i = column;
+    Color colorAtCheckPos=board[row][column];
+    //Check toward the right from current position
+    while(i < ModelConstants.COLS && board[row][i] == colorAtCheckPos){
+      len++;
+      i++;
+    }
+    //Reset to check position
+    i = column;
+    //Check towards left from the current position
+    while(i>0 && board[row][i-1] == colorAtCheckPos){
+      i--;
+      len++;
+    }
+    
+    if(len >= ModelConstants.winLength){
+      return true;
+    }
     return false;
   }
 
@@ -219,10 +324,13 @@ public class Model {
   }
 
   public void gameReset() {
-    System.out.println("RESTARTING GAME");
     board = new Color[ModelConstants.ROWS][ModelConstants.COLS];
     discsInCol = new int[ModelConstants.COLS];
     fireGameResetEvent();
+  }
+
+  public void gameStarted() {
+    fireGameStartedEvent();
   }
 
 }

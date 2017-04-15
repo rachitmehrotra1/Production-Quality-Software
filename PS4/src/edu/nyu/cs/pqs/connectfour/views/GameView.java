@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -43,12 +42,10 @@ public class GameView implements Listener {
   public GameView(Model model) {
     this.model = model;
     this.model.addListener(this);
-    this.gameStarted();
   }
 
   @Override
   public void gameStarted() {
-    System.out.println("Game Started");
     boardPanel.setLayout(new GridLayout(ModelConstants.ROWS, ModelConstants.COLS));
     dropPanel.setLayout(new GridLayout(0, ModelConstants.COLS));
     infoPanel.setLayout(new BorderLayout());
