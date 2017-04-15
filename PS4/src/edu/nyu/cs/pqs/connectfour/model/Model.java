@@ -74,11 +74,11 @@ public class Model {
   public void addPlayers(GameMode mode) {
     this.gameMode = mode;
     if (mode.equals(GameMode.SINGLE)) {
-      playerYellow = PlayerFactory.addNewPlayer(PlayerType.COMPUTER, Color.YELLOW);
-      playerRed = PlayerFactory.addNewPlayer(PlayerType.HUMAN, Color.RED);
+      playerYellow = PlayerFactory.addNewPlayer(PlayerType.COMPUTER, ModelConstants.computerDefault);
+      playerRed = PlayerFactory.addNewPlayer(PlayerType.HUMAN, ModelConstants.humanPlayer1);
     } else {
-      playerYellow = PlayerFactory.addNewPlayer(PlayerType.HUMAN, Color.YELLOW);
-      playerRed = PlayerFactory.addNewPlayer(PlayerType.HUMAN, Color.RED);
+      playerYellow = PlayerFactory.addNewPlayer(PlayerType.HUMAN, ModelConstants.humanPlayer2);
+      playerRed = PlayerFactory.addNewPlayer(PlayerType.HUMAN, ModelConstants.humanPlayer1);
     }
     // Randomly Generate Whose turn is it
     int random = (int) Math.round(Math.random());
@@ -312,7 +312,7 @@ public class Model {
     }
   }
 
-  public boolean isColumnFull(int column) {
+  public boolean doesColumnHasSpace(int column) {
     if (column > ModelConstants.COLS || column < 0) {
       throw new IllegalArgumentException("Column out of bounds");
     }
@@ -333,4 +333,29 @@ public class Model {
     fireGameStartedEvent();
   }
 
+  /**
+   * This method checks if a certain move is made , will that result in a Win
+   * This is used by the AI to check if a certain move will result in a win.
+   * @param column
+   * @param color
+   * @return
+   */
+  public boolean checkIfWinnerIfMoveMade(int column,Color color){
+    if(column < 0 || column > ModelConstants.COLS){
+      throw new IllegalArgumentException("Column out of bounds");
+    }
+    int i = discsInCol[column];
+    if(i >= ModelConstants.ROWS){
+      //Since column is already full , it wont result in win
+      return false;
+    }
+    board[i][column] = color;
+    if(checkWinner(i, column)){
+      board[i][column]=null;
+      return true;
+    } else {
+      board[i][column]=null;
+      return false;
+    }
+  }
 }
