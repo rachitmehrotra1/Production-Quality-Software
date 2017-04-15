@@ -22,4 +22,6 @@ public interface Listener {
   void makeMove(int row, int col, Color color, GameMode mode);
 
   void alert(String message);
+
+  void gameReset();
 }

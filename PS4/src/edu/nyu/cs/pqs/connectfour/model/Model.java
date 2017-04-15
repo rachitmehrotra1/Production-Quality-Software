@@ -93,6 +93,12 @@ public class Model {
       listener.gameStarted();
     }
   }
+  
+  public void fireGameResetEvent() {
+    for (Listener listener : listeners) {
+      listener.gameReset();
+    }
+  }
 
   public void fireAlertEvent(String message) {
     for (Listener listener : listeners) {
@@ -149,6 +155,7 @@ public class Model {
     int currRow = discsInCol[column];
     discsInCol[column] = discsInCol[column] + 1;
     fireMoveMadeEvent(currRow, column, color);
+    board[currRow][column]= color;
     if (checkWinner(currRow, column)) {
       fireGameWonEvent(color);
     }
@@ -209,6 +216,13 @@ public class Model {
     } else {
       return true;
     }
+  }
+
+  public void gameReset() {
+    System.out.println("RESTARTING GAME");
+    board = new Color[ModelConstants.ROWS][ModelConstants.COLS];
+    discsInCol = new int[ModelConstants.COLS];
+    fireGameResetEvent();
   }
 
 }

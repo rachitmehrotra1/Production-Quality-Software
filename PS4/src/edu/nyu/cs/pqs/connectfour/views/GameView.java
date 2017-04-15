@@ -35,6 +35,8 @@ public class GameView implements Listener {
   private JPanel dropPanel = new JPanel();
   private JButton[] dropButtons = new JButton[ModelConstants.COLS];
   private JTextField gameStatusField = new JTextField();
+  private JPanel infoPanel = new JPanel();
+  private JButton gameReset = new JButton("Reset");
 
 
 
@@ -46,8 +48,10 @@ public class GameView implements Listener {
 
   @Override
   public void gameStarted() {
+    System.out.println("Game Started");
     boardPanel.setLayout(new GridLayout(ModelConstants.ROWS, ModelConstants.COLS));
     dropPanel.setLayout(new GridLayout(0, ModelConstants.COLS));
+    infoPanel.setLayout(new BorderLayout());
 
     // Create BoardPanels for Game Positions
     for (int i = 0; i < ModelConstants.ROWS; i++) {
@@ -68,11 +72,19 @@ public class GameView implements Listener {
       dropButtons[i] = drop;
       dropPanel.add(dropButtons[i]);
     }
+    gameReset.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        model.gameReset();
+      }
+    });
 
+    infoPanel.add(new JScrollPane(gameStatusField), BorderLayout.CENTER);
+    infoPanel.add(gameReset, BorderLayout.EAST);
     gameFrame.add(dropPanel, BorderLayout.NORTH);
     gameFrame.add(boardPanel, BorderLayout.CENTER);
-    gameFrame.add(new JScrollPane(gameStatusField), BorderLayout.SOUTH);
-    gameFrame.setSize(800, 800);
+    gameFrame.add(infoPanel, BorderLayout.SOUTH);
+    gameFrame.setSize(700, 700);
     // To make sure that the JFrame Appears in the center
     gameFrame.setLocationRelativeTo(null);
     gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -95,15 +107,21 @@ public class GameView implements Listener {
         button.removeActionListener(listener);
       }
     }
-    gameStatusField.setText("Game Tied!");
+    JOptionPane.showMessageDialog(gameFrame, "Game Tied! I'll start another one for you",
+        "Game Tied!", JOptionPane.INFORMATION_MESSAGE);
+    model.gameReset();
   }
 
   @Override
   public void gameWon(Color color) {
     if (color == Color.RED) {
-      gameStatusField.setText("Congratulations! Red Wins!");
+      JOptionPane.showMessageDialog(gameFrame,
+          "Congratulations! Red Wins! Let's Play another one.", "Game Over!",
+          JOptionPane.INFORMATION_MESSAGE);
     } else if (color == Color.YELLOW) {
-      gameStatusField.setText("Congratulations! Yellow Wins!");
+      JOptionPane.showMessageDialog(gameFrame,
+          "Congratulations! Yellow Wins! Let's Play another one.", "Game Over!",
+          JOptionPane.INFORMATION_MESSAGE);
     }
     // Once the game has been won we need to disable the buttons so that drop buttons dont work
     // anymore
@@ -113,6 +131,7 @@ public class GameView implements Listener {
         button.removeActionListener(listener);
       }
     }
+    model.gameReset();
   }
 
   @Override
@@ -149,4 +168,14 @@ public class GameView implements Listener {
     JOptionPane.showMessageDialog(gameFrame, message, "Invalid move", JOptionPane.ERROR_MESSAGE);
   }
 
+  @Override
+  public void gameReset() {
+    boardPanel.removeAll();
+    dropPanel.removeAll();
+    infoPanel.removeAll();
+    for (ActionListener listener : gameReset.getActionListeners()) {
+      gameReset.removeActionListener(listener);
+    }
+    gameStarted();
+  }
 }
