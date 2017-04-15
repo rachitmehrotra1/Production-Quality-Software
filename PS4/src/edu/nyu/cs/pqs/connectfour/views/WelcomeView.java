@@ -45,7 +45,6 @@ public class WelcomeView {
     welcomeFrame.setLocationRelativeTo(null);
     welcomeFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-
     buttonPanel.add(singlePlayer, BorderLayout.NORTH);
     buttonPanel.add(multiPlayer, BorderLayout.SOUTH);
     welcomeFrame.add(buttonPanel, BorderLayout.CENTER);
@@ -70,13 +69,15 @@ public class WelcomeView {
   
   private void singlePlayerButtonPressed(){
     Model singlePlayerGame = Model.getModelInstance();
-//    new GameView(singlePlayerGame);
+    new GameView(singlePlayerGame);
     singlePlayerGame.addPlayers(GameMode.SINGLE);
+    welcomeFrame.setVisible(false);
   }
   
   private void multiPlayerButtonPressed(){
     Model multiPlayerGame = Model.getModelInstance();
-//    new GameView(multiPlayerGame);
+    new GameView(multiPlayerGame);
     multiPlayerGame.addPlayers(GameMode.MULTIPLAYER);
+    welcomeFrame.setVisible(false);
   }
 }

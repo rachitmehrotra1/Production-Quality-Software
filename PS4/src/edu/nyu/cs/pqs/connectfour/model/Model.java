@@ -73,9 +73,6 @@ public class Model {
    */
   public void addPlayers(GameMode mode) {
     this.gameMode = mode;
-    // Randomly Generate Whose turn is it
-    int random = (int) Math.round(Math.random());
-    playerTurn = (random == 0) ? playerRed : playerYellow;
     if (mode.equals(GameMode.SINGLE)) {
       playerYellow = PlayerFactory.addNewPlayer(PlayerType.COMPUTER, Color.YELLOW);
       playerRed = PlayerFactory.addNewPlayer(PlayerType.HUMAN, Color.RED);
@@ -83,6 +80,9 @@ public class Model {
       playerYellow = PlayerFactory.addNewPlayer(PlayerType.HUMAN, Color.YELLOW);
       playerRed = PlayerFactory.addNewPlayer(PlayerType.HUMAN, Color.RED);
     }
+    // Randomly Generate Whose turn is it
+    int random = (int) Math.round(Math.random());
+    playerTurn = random == 0 ? playerRed : playerYellow;
   }
 
   /**
@@ -91,6 +91,12 @@ public class Model {
   public void fireGameStartedEvent() {
     for (Listener listener : listeners) {
       listener.gameStarted();
+    }
+  }
+
+  public void fireAlertEvent(String message) {
+    for (Listener listener : listeners) {
+      listener.alert(message);
     }
   }
 
@@ -170,37 +176,39 @@ public class Model {
   public void dropDisc(int column) {
     if (discsInCol[column] >= ModelConstants.ROWS) {
       // TODO Create a alert event to notify the user that column is full
-      throw new IllegalStateException("Column is Full");
-    }
-    if (gameMode.equals(GameMode.SINGLE)) {
-      // Huaman Player Move Recorded
-      playerRed.setColMove(column);
-      playerRed.makeMove(this);
-      // Bot making a move
-      playerYellow.makeMove(this);
+      // throw new IllegalStateException("Column is Full");
+      fireAlertEvent("Column is full");
     } else {
-      //Multiplayer Game
-      if(playerTurn == playerRed){
+      if (gameMode.equals(GameMode.SINGLE)) {
+        // Huaman Player Move Recorded
         playerRed.setColMove(column);
         playerRed.makeMove(this);
-        playerTurn = playerYellow;
-      } else {
-        playerYellow.setColMove(column);
+        // Bot making a move
         playerYellow.makeMove(this);
-        playerTurn = playerRed;
+      } else {
+        // Multiplayer Game
+        if (playerTurn == playerRed) {
+          playerRed.setColMove(column);
+          playerRed.makeMove(this);
+          playerTurn = playerYellow;
+        } else {
+          playerYellow.setColMove(column);
+          playerYellow.makeMove(this);
+          playerTurn = playerRed;
+        }
       }
     }
   }
 
-    public boolean isColumnFull(int column){
-      if (column > ModelConstants.COLS || column < 0) {
-        throw new IllegalArgumentException("Column out of bounds");
-      }
-      if(discsInCol[column]+1 >= ModelConstants.ROWS){
-        return false;
-      } else {
-        return true;
-      }
+  public boolean isColumnFull(int column) {
+    if (column > ModelConstants.COLS || column < 0) {
+      throw new IllegalArgumentException("Column out of bounds");
     }
-  
+    if (discsInCol[column] + 1 >= ModelConstants.ROWS) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
 }
