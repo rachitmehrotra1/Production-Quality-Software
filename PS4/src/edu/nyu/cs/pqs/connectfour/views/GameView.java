@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Objects;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -24,7 +26,6 @@ import edu.nyu.cs.pqs.connectfour.model.ModelConstants;
  * @author Rachit
  *
  */
-// TODO : Equals and Hashcode
 public class GameView implements Listener {
   private Model model;
   private JFrame gameFrame = new JFrame("Connect4 Application");
@@ -174,5 +175,26 @@ public class GameView implements Listener {
       gameReset.removeActionListener(listener);
     }
     gameStarted();
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(gameFrame.hashCode(), boardPanel.hashCode(), dropPanel.hashCode(),
+        infoPanel.hashCode());
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null) {
+      return false;
+    }
+    GameView other = (GameView) obj;
+    if (this.hashCode() == other.hashCode()) {
+      return true;
+    }
+    return false;
   }
 }

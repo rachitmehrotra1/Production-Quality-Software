@@ -1,6 +1,7 @@
 package edu.nyu.cs.pqs.connectfour.player;
 
 import java.awt.Color;
+import java.util.Objects;
 
 import edu.nyu.cs.pqs.connectfour.model.Model;
 import edu.nyu.cs.pqs.connectfour.model.ModelConstants;
@@ -11,7 +12,6 @@ import edu.nyu.cs.pqs.connectfour.model.ModelConstants;
  * @author Rachit
  *
  */
-// TODO : EQUALS AND HASHCODE
 public class ComputerPlayer implements Player {
 
   /**
@@ -118,6 +118,26 @@ public class ComputerPlayer implements Player {
   @Override
   public PlayerType getPlayerType() {
     return PlayerType.COMPUTER;
+  }
+
+  @Override
+  public int hashCode() {
+    return playerColor.hashCode();
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (obj == null || !(obj instanceof ComputerPlayer)) {
+      return false;
+    }
+    if (this == obj) {
+      return true;
+    }
+    ComputerPlayer other = (ComputerPlayer) obj;
+    if (moveCol == other.moveCol && playerColor.equals(other.playerColor)) {
+      return true;
+    }
+    return false;
   }
 
 }

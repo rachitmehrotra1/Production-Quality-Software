@@ -12,7 +12,6 @@ import edu.nyu.cs.pqs.connectfour.model.ModelConstants;
  * @author Rachit
  *
  */
-// TODO: EQUALS AND HASHCODE
 public class HumanPlayer implements Player {
 
   /**
@@ -78,22 +77,22 @@ public class HumanPlayer implements Player {
 
   @Override
   public int hashCode() {
-    return Objects.hash(playerColor.hashCode());
+    return playerColor.hashCode();
   }
 
   @Override
   public boolean equals(Object obj) {
-    if (this == obj)
+    if (this == obj) {
       return true;
-    if (obj == null)
-      return false;
-    if (getClass() != obj.getClass())
-      return false;
-    HumanPlayer other = (HumanPlayer) obj;
-    if (!playerColor.equals(other.playerColor)) {
+    }
+    if (obj == null || !(obj instanceof HumanPlayer)) {
       return false;
     }
-    return true;
+    HumanPlayer other = (HumanPlayer) obj;
+    if (moveCol == other.moveCol && playerColor.equals(other.playerColor)) {
+      return true;
+    }
+    return false;
   }
 
 }

@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Objects;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -19,7 +20,6 @@ import edu.nyu.cs.pqs.connectfour.model.Model;
  * @author Rachit
  *
  */
-// TODO HashCode and Equals!!
 public class WelcomeView {
   private JFrame welcomeFrame = new JFrame("Connect4 Application");
   private JButton singlePlayer = new JButton("Human vs Computer");
@@ -66,20 +66,40 @@ public class WelcomeView {
       }
     });
   }
-  
-  private void singlePlayerButtonPressed(){
+
+  private void singlePlayerButtonPressed() {
     Model singlePlayerGame = Model.getModelInstance();
     new GameView(singlePlayerGame);
     singlePlayerGame.gameStarted();
     singlePlayerGame.addPlayers(GameMode.SINGLE);
     welcomeFrame.setVisible(false);
   }
-  
-  private void multiPlayerButtonPressed(){
+
+  private void multiPlayerButtonPressed() {
     Model multiPlayerGame = Model.getModelInstance();
     new GameView(multiPlayerGame);
     multiPlayerGame.gameStarted();
     multiPlayerGame.addPlayers(GameMode.MULTIPLAYER);
     welcomeFrame.setVisible(false);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(welcomeFrame.hashCode(), singlePlayer.hashCode(), multiPlayer.hashCode());
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null) {
+      return false;
+    }
+    WelcomeView other = (WelcomeView) obj;
+    if (this.hashCode() == other.hashCode()) {
+      return true;
+    }
+    return false;
   }
 }

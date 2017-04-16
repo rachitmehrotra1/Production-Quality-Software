@@ -348,9 +348,8 @@ public class Model {
    */
   public void dropDisc(int column) {
     if (discsInCol[column] >= ModelConstants.ROWS) {
-      // TODO Create a alert event to notify the user that column is full
-      // throw new IllegalStateException("Column is Full");
       fireAlertEvent("Column is full");
+      throw new IllegalStateException("Column is Full");
     } else {
       if (gameMode.equals(GameMode.SINGLE)) {
         // Huaman Player Move Recorded
