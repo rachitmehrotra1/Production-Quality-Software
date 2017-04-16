@@ -44,7 +44,6 @@ public class ComputerPlayer implements Player {
     this.playerColor = humanPlayerBuilder.playerColor;
   }
 
-
   @Override
   public void makeMove(Model model) {
     if (model.equals(null)) {

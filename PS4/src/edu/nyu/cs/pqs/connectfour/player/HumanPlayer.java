@@ -90,10 +90,10 @@ public class HumanPlayer implements Player {
     if (getClass() != obj.getClass())
       return false;
     HumanPlayer other = (HumanPlayer) obj;
-    if (!playerColor.equals(other.playerColor)){
+    if (!playerColor.equals(other.playerColor)) {
       return false;
     }
-      return true;
+    return true;
   }
 
 }

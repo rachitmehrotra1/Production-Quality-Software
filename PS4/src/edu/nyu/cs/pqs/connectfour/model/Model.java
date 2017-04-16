@@ -22,21 +22,21 @@ public class Model {
   private static final Model model = new Model();
 
   private List<Listener> listeners = new ArrayList<Listener>();
-  private Color[][] board = new Color[ModelConstants.ROWS][ModelConstants.COLS];
+  private Color[][] board;
   // Need a Array to keep a track of discs inserted in a column to make sure that columns
   // dont overfill
-  private int[] discsInCol = new int[ModelConstants.COLS];
+  private int[] discsInCol;
   private GameMode gameMode;
   private Player playerRed;
   private Player playerYellow;
   private Player playerTurn;
 
-  /*
+  /**
    * Private Constructor for Model
    */
   private Model() {}
 
-  /*
+  /**
    * Method to return the instance(singleton) of the game Model
    */
   public static Model getModelInstance() {
@@ -74,7 +74,8 @@ public class Model {
   public void addPlayers(GameMode mode) {
     this.gameMode = mode;
     if (mode.equals(GameMode.SINGLE)) {
-      playerYellow = PlayerFactory.addNewPlayer(PlayerType.COMPUTER, ModelConstants.computerDefault);
+      playerYellow =
+          PlayerFactory.addNewPlayer(PlayerType.COMPUTER, ModelConstants.computerDefault);
       playerRed = PlayerFactory.addNewPlayer(PlayerType.HUMAN, ModelConstants.humanPlayer1);
     } else {
       playerYellow = PlayerFactory.addNewPlayer(PlayerType.HUMAN, ModelConstants.humanPlayer2);
@@ -93,13 +94,21 @@ public class Model {
       listener.gameStarted();
     }
   }
-  
+
+  /**
+   * Fires up a Game Reset event to notify all the listeners that the game is being reset
+   */
   private void fireGameResetEvent() {
     for (Listener listener : listeners) {
       listener.gameReset();
     }
   }
 
+  /**
+   * Fires up a Alert event which displays a notification in all the views
+   * 
+   * @param message
+   */
   private void fireAlertEvent(String message) {
     for (Listener listener : listeners) {
       listener.alert(message);
@@ -151,11 +160,18 @@ public class Model {
     return this.gameMode;
   }
 
+  /**
+   * Model updates its internal data store to store the moves made by the player and checks if they
+   * have led to any player winning or game being tied
+   * 
+   * @param color
+   * @param column
+   */
   public void makeMove(Color color, int column) {
     int currRow = discsInCol[column];
     discsInCol[column] = discsInCol[column] + 1;
     fireMoveMadeEvent(currRow, column, color);
-    board[currRow][column]= color;
+    board[currRow][column] = color;
     if (checkWinner(currRow, column)) {
       fireGameWonEvent(color);
     }
@@ -164,7 +180,12 @@ public class Model {
     }
   }
 
-  boolean isBordFull() {
+  /**
+   * Checks if the board is full of discs i.e no space is left to make a move
+   * 
+   * @return
+   */
+  private boolean isBordFull() {
     for (int i = 0; i < ModelConstants.ROWS; i++) {
       for (int j = 0; j < ModelConstants.COLS; j++) {
         if (board[i][j] == null) {
@@ -175,116 +196,156 @@ public class Model {
     return true;
   }
 
+  /**
+   * Implements the game logic to check if the specific move has led to the player (who made the
+   * move) win the game By one of the 3 methods. (Horizontally , Vertically , Diagonally)
+   * 
+   * @param row
+   * @param column
+   * @return True/False based on the status of the game
+   */
   private boolean checkWinner(int row, int column) {
-    if(didWinHorizontally(row,column)){
+    if (didWinHorizontally(row, column)) {
       return true;
-    } else if (didWinVertically(row,column)){
+    } else if (didWinVertically(row, column)) {
       return true;
-    } else if (didWinDiagonallyTopLeftToRightDown(row,column)){
+    } else if (didWinDiagonallyTopLeftToRightDown(row, column)) {
       return true;
-    } else if(didWinDiagonallyTopRightToLeftDown(row,column)){
+    } else if (didWinDiagonallyTopRightToLeftDown(row, column)) {
       return true;
     }
     return false;
   }
 
+  /**
+   * Check if the player has won the game Diagonally
+   * 
+   * @param row
+   * @param column
+   * @return
+   */
   private boolean didWinDiagonallyTopRightToLeftDown(int row, int column) {
     int len = 0;
-    Color colorAtCheckPost=board[row][column];
-    //Go towards top right from the current position
-    for(int i = row,j=column ; i < ModelConstants.ROWS && j < ModelConstants.COLS ; i++ ,j++ ){
-        if(board[i][j] == colorAtCheckPost){
-          len++;
-        } else {
-          break;
-        }
+    Color colorAtCheckPost = board[row][column];
+    // Go towards top right from the current position
+    for (int i = row, j = column; i < ModelConstants.ROWS && j < ModelConstants.COLS; i++, j++) {
+      if (board[i][j] == colorAtCheckPost) {
+        len++;
+      } else {
+        break;
+      }
     }
-    //Go towards bottom left from current position (excluding the current position)
-    for(int i = row ,j=column ; i > 0 && j > 0; i-- , j--){
-        if(board[i-1][j-1] == colorAtCheckPost){
-          len++;
-        } else {
-          break;
-        }
+    // Go towards bottom left from current position (excluding the current position)
+    for (int i = row, j = column; i > 0 && j > 0; i--, j--) {
+      if (board[i - 1][j - 1] == colorAtCheckPost) {
+        len++;
+      } else {
+        break;
+      }
     }
-    if(len >= ModelConstants.winLength){
+    if (len >= ModelConstants.winLength) {
       return true;
     }
     return false;
   }
 
+  /**
+   * Check if the player has won the game Diagonally
+   * 
+   * @param row
+   * @param column
+   * @return
+   */
   private boolean didWinDiagonallyTopLeftToRightDown(int row, int column) {
     int len = 0;
-    Color colorAtCheckPost=board[row][column];
-    //Go towards top left from the current position
-    for(int i = row,j=column ; i < ModelConstants.ROWS && j >= 0 ; i++,j--){
-        if(board[i][j] == colorAtCheckPost){
-          len++;
-        }
-        else {
-          break;
-        }
+    Color colorAtCheckPost = board[row][column];
+    // Go towards top left from the current position
+    for (int i = row, j = column; i < ModelConstants.ROWS && j >= 0; i++, j--) {
+      if (board[i][j] == colorAtCheckPost) {
+        len++;
+      } else {
+        break;
+      }
     }
-    //Go towards bottom right from current position (excluding the current position)
-    for(int i = row ,j=column ; i > 0 && j < ModelConstants.COLS; i--,j++ ){
-        if(board[i-1][j+1] == colorAtCheckPost){
-          len++;
-        } else {
-          break;
-        }
+    // Go towards bottom right from current position (excluding the current position)
+    for (int i = row, j = column; i > 0 && j < ModelConstants.COLS - 1; i--, j++) {
+      if (board[i - 1][j + 1] == colorAtCheckPost) {
+        len++;
+      } else {
+        break;
+      }
     }
-    if(len >= ModelConstants.winLength){
+    if (len >= ModelConstants.winLength) {
       return true;
     }
     return false;
   }
 
+  /**
+   * Check if the player has won the game Vertically
+   * 
+   * @param row
+   * @param column
+   * @return
+   */
   private boolean didWinVertically(int row, int column) {
     int len = 0;
     int i = row;
-    Color colorAtCheckPos=board[row][column];
-    //Check toward the right from current position
-    while(i < ModelConstants.ROWS && board[i][column] == colorAtCheckPos){
+    Color colorAtCheckPos = board[row][column];
+    // Check toward the right from current position
+    while (i < ModelConstants.ROWS && board[i][column] == colorAtCheckPos) {
       len++;
       i++;
     }
-    //Reset to check position
+    // Reset to check position
     i = row;
-    //Check towards left from the current position
-    while(i>0 && board[i-1][column] == colorAtCheckPos){
+    // Check towards left from the current position
+    while (i > 0 && board[i - 1][column] == colorAtCheckPos) {
       i--;
       len++;
     }
-    
-    if(len >= ModelConstants.winLength){
+
+    if (len >= ModelConstants.winLength) {
       return true;
     }
     return false;
   }
 
+  /**
+   * Check if the player has won the game Horizontally
+   * 
+   * @param row
+   * @param column
+   * @return
+   */
   private boolean didWinHorizontally(int row, int column) {
     int len = 0;
     int i = column;
-    Color colorAtCheckPos=board[row][column];
-    //Check toward the right from current position
-    while(i < ModelConstants.COLS && board[row][i] == colorAtCheckPos){
+    Color colorAtCheckPos = board[row][column];
+    // Check toward the right from current position
+    while (i < ModelConstants.COLS && board[row][i] == colorAtCheckPos) {
       len++;
       i++;
     }
-    //Reset to check position
+    // Reset to check position
     i = column;
-    //Check towards left from the current position
-    while(i>0 && board[row][i-1] == colorAtCheckPos){
+    // Check towards left from the current position
+    while (i > 0 && board[row][i - 1] == colorAtCheckPos) {
       i--;
       len++;
     }
-    
-    if(len >= ModelConstants.winLength){
+
+    if (len >= ModelConstants.winLength) {
       return true;
     }
     return false;
   }
 
+  /**
+   * Drop the disc in the selected column based on button click
+   * 
+   * @param column
+   */
   public void dropDisc(int column) {
     if (discsInCol[column] >= ModelConstants.ROWS) {
       // TODO Create a alert event to notify the user that column is full
@@ -312,6 +373,12 @@ public class Model {
     }
   }
 
+  /**
+   * Check if the given column has any more space to drop discs in it
+   * 
+   * @param column
+   * @return
+   */
   public boolean doesColumnHasSpace(int column) {
     if (column > ModelConstants.COLS || column < 0) {
       throw new IllegalArgumentException("Column out of bounds");
@@ -323,38 +390,49 @@ public class Model {
     }
   }
 
+  /**
+   * Reset the game's internal data store and fire the game reset event
+   */
   public void gameReset() {
     board = new Color[ModelConstants.ROWS][ModelConstants.COLS];
     discsInCol = new int[ModelConstants.COLS];
     fireGameResetEvent();
   }
 
+  /**
+   * Fire the game started event to notify listeners
+   */
   public void gameStarted() {
+    board = new Color[ModelConstants.ROWS][ModelConstants.COLS];
+    // Need a Array to keep a track of discs inserted in a column to make sure that columns
+    // dont overfill
+    discsInCol = new int[ModelConstants.COLS];
     fireGameStartedEvent();
   }
 
   /**
-   * This method checks if a certain move is made , will that result in a Win
-   * This is used by the AI to check if a certain move will result in a win.
+   * This method checks if a certain move is made , will that result in a Win This is used by the AI
+   * to check if a certain move will result in a win.
+   * 
    * @param column
    * @param color
    * @return
    */
-  public boolean checkIfWinnerIfMoveMade(int column,Color color){
-    if(column < 0 || column > ModelConstants.COLS){
+  public boolean checkIfWinnerIfMoveMade(int column, Color color) {
+    if (column < 0 || column > ModelConstants.COLS) {
       throw new IllegalArgumentException("Column out of bounds");
     }
     int i = discsInCol[column];
-    if(i >= ModelConstants.ROWS){
-      //Since column is already full , it wont result in win
+    if (i >= ModelConstants.ROWS) {
+      // Since column is already full , it wont result in win
       return false;
     }
     board[i][column] = color;
-    if(checkWinner(i, column)){
-      board[i][column]=null;
+    if (checkWinner(i, column)) {
+      board[i][column] = null;
       return true;
     } else {
-      board[i][column]=null;
+      board[i][column] = null;
       return false;
     }
   }
