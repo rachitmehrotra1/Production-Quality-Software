@@ -30,7 +30,6 @@ public class GameView implements Listener {
   private Model model;
   private JFrame gameFrame = new JFrame("Connect4 Application");
   private JPanel boardPanel = new JPanel();
-  // private JPanel[][] boardPositionPanels= new JPanel[ModelConstants.ROWS][ModelConstants.COLS];
   private JLabel[][] boardPositionPanels = new JLabel[ModelConstants.ROWS][ModelConstants.COLS];
   private JPanel dropPanel = new JPanel();
   private JButton[] dropButtons = new JButton[ModelConstants.COLS];
@@ -38,8 +37,11 @@ public class GameView implements Listener {
   private JPanel infoPanel = new JPanel();
   private JButton gameReset = new JButton("Reset");
 
-
-
+  /**
+   * Public constructor to create a new GameView with a given model instance
+   * 
+   * @param model
+   */
   public GameView(Model model) {
     this.model = model;
     this.model.addListener(this);
@@ -90,6 +92,11 @@ public class GameView implements Listener {
     gameFrame.setVisible(true);
   }
 
+  /**
+   * Action to be performed incase a drop button is pressed on a specific column
+   * 
+   * @param source
+   */
   private void dropButtonPressed(Object source) {
     for (int i = 0; i < ModelConstants.COLS; i++) {
       if (source == dropButtons[i]) {

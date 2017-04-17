@@ -33,6 +33,9 @@ public class WelcomeView {
     addActionsToButtons();
   }
 
+  /**
+   * Create a welcome view that gives the users to choose the type of game they want to play
+   */
   private void createWelcomeView() {
     JPanel buttonPanel = new JPanel();
 
@@ -52,6 +55,9 @@ public class WelcomeView {
     welcomeFrame.setVisible(true);
   }
 
+  /**
+   * Add the required action listeners to the buttons present in the view
+   */
   private void addActionsToButtons() {
     singlePlayer.addActionListener(new ActionListener() {
       @Override
@@ -67,6 +73,9 @@ public class WelcomeView {
     });
   }
 
+  /**
+   * Steps to be performed when a single player button is pressed on the view
+   */
   private void singlePlayerButtonPressed() {
     Model singlePlayerGame = Model.getModelInstance();
     new GameView(singlePlayerGame);
@@ -75,6 +84,9 @@ public class WelcomeView {
     welcomeFrame.setVisible(false);
   }
 
+  /**
+   * Steps to be performed when a multi-player button is pressed on the view
+   */
   private void multiPlayerButtonPressed() {
     Model multiPlayerGame = Model.getModelInstance();
     new GameView(multiPlayerGame);

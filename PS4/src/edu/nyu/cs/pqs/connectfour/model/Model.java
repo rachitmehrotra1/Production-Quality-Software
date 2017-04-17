@@ -1,8 +1,8 @@
 package edu.nyu.cs.pqs.connectfour.model;
 
 import java.awt.Color;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import edu.nyu.cs.pqs.connectfour.player.Player;
 import edu.nyu.cs.pqs.connectfour.player.PlayerFactory;
@@ -21,7 +21,7 @@ public class Model {
   // execution
   private static final Model model = new Model();
 
-  private List<Listener> listeners = new ArrayList<Listener>();
+  private List<Listener> listeners = new CopyOnWriteArrayList<Listener>();
   private Color[][] board;
   // Need a Array to keep a track of discs inserted in a column to make sure that columns
   // dont overfill
