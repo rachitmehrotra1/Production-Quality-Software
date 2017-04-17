@@ -46,7 +46,7 @@ public class HumanPlayer implements Player {
 
   @Override
   public void makeMove(Model model) {
-    if (model.equals(null)) {
+    if (model == null) {
       throw new IllegalStateException("Game Model Not Initialized");
     }
     model.makeMove(playerColor, moveCol);
@@ -89,7 +89,8 @@ public class HumanPlayer implements Player {
       return false;
     }
     HumanPlayer other = (HumanPlayer) obj;
-    if (moveCol == other.moveCol && playerColor.equals(other.playerColor)) {
+    if (moveCol == other.moveCol && playerColor.equals(other.playerColor)
+        && other.getPlayerType() == this.getPlayerType()) {
       return true;
     }
     return false;

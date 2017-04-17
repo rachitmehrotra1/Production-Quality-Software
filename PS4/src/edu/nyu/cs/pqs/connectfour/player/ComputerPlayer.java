@@ -46,7 +46,7 @@ public class ComputerPlayer implements Player {
 
   @Override
   public void makeMove(Model model) {
-    if (model.equals(null)) {
+    if (model == null) {
       throw new IllegalStateException("Game Model Not Initialized");
     }
     /*
@@ -134,7 +134,8 @@ public class ComputerPlayer implements Player {
       return true;
     }
     ComputerPlayer other = (ComputerPlayer) obj;
-    if (moveCol == other.moveCol && playerColor.equals(other.playerColor)) {
+    if (moveCol == other.moveCol && playerColor.equals(other.playerColor)
+        && other.getPlayerType() == this.getPlayerType()) {
       return true;
     }
     return false;
