@@ -435,4 +435,25 @@ public class Model {
       return false;
     }
   }
+  
+  /**
+   * This method is used for unit tests only
+   */
+  List<Listener> getListenersForTesting(){
+    return listeners;
+  }
+  
+  /**
+   * This method is used for unit tests only
+   */
+  void setDiscsInColumnForTesting(int column, int discs){
+    discsInCol[column]=discs;
+  }
+  
+  /**
+   * This method is used for unit tests only
+   */
+  void putDiscAtPosInBoardForTesting(int row , int column , Color color){
+    this.board[row][column]= color;
+  }
 }
