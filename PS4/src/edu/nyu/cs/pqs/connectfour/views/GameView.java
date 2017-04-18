@@ -46,7 +46,7 @@ public class GameView implements Listener {
     this.model = model;
     this.model.addListener(this);
   }
-
+  
   @Override
   public void gameStarted() {
     boardPanel.setLayout(new GridLayout(ModelConstants.ROWS, ModelConstants.COLS));

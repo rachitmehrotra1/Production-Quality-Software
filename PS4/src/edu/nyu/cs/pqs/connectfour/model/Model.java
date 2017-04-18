@@ -55,18 +55,6 @@ public class Model {
   }
 
   /**
-   * Remove listener from the list of listeners
-   * 
-   * @param listener
-   */
-  public void removeListener(Listener listener) {
-    if (!listeners.contains(listener)) {
-      throw new IllegalArgumentException("Listener does not exist");
-    }
-    listeners.remove(listener);
-  }
-
-  /**
    * Add new players to game based on the game mode and randomly decide who goes first
    * 
    * @param mode

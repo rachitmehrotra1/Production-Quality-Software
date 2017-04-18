@@ -1,5 +1,6 @@
 package edu.nyu.cs.pqs.connectfour.model;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -8,13 +9,21 @@ import java.awt.Color;
 import org.junit.Before;
 import org.junit.Test;
 
-// TODO : Test gameReset and exception in dropDisc !! 
+import edu.nyu.cs.pqs.connectfour.views.GameView;
+
+/**
+ * Test class for the Model for game Connect4
+ * CodeCov: 91%
+ * @author Rachit
+ *
+ */
 public class ModelTest {
 
   Model model = Model.getModelInstance();
 
   @Before
   public void setUp() {
+    model.addPlayers(GameMode.MULTIPLAYER);
     model.gameStarted();
   }
 
@@ -176,14 +185,53 @@ public class ModelTest {
         || model.getColorAtPosFromBoardForTesting(0, 5) == ModelConstants.computerDefault
         || model.getColorAtPosFromBoardForTesting(0, 6) == ModelConstants.computerDefault);
   }
-  
+
   @Test
   public void testMakeMoveForHumanPlayers() {
     model.addPlayers(GameMode.MULTIPLAYER);
-    //Since who goes first is random , we will make 2 moves and make sure that the discs are 
-    //opposite in both the positions
+    // Since who goes first is random , we will make 2 moves and make sure that the discs are
+    // opposite in both the positions
     model.dropDisc(2);
     model.dropDisc(3);
-    assertFalse(model.getColorAtPosFromBoardForTesting(0, 2) == model.getColorAtPosFromBoardForTesting(0, 3));
+    assertFalse(model.getColorAtPosFromBoardForTesting(0, 2) == model
+        .getColorAtPosFromBoardForTesting(0, 3));
+  }
+
+  @Test
+  public void testGameReset() {
+    model.putDiscAtPosInBoardForTesting(2, 3, Color.BLACK);
+    assertTrue(Color.BLACK == model.getColorAtPosFromBoardForTesting(2, 3));
+    model.gameReset();
+    assertEquals("Since game was reset , that position should be null", null,
+        model.getColorAtPosFromBoardForTesting(2, 3));
+  }
+
+  @Test(expected = IllegalStateException.class)
+  public void testDropDiskException() {
+    model.setDiscsInColumnForTesting(5, 6);
+    model.dropDisc(5);
+  }
+
+  @Test
+  public void testDropDisk() {
+    model.dropDisc(2);
+    assertTrue("Should not be null as we just dropped a disc in 2nd column",
+        model.getColorAtPosFromBoardForTesting(0, 2) != null);
+  }
+
+  @Test
+  public void testAddListener() {
+    GameView testView = new GameView(model);
+    assertTrue(
+        "Since the constructor of game view calls addListeners of model, it should be in the list "
+        + "of listeners",
+        model.getListenersForTesting().contains(testView));
+    //This is required to make sure the view is destroyed at end of test
+    testView=null;
+  }
+  
+  @Test
+  public void testGetGameMode(){
+    assertTrue("Game Mode should be MultiPlayer",model.getGameMode().equals(GameMode.MULTIPLAYER));
   }
 }
