@@ -182,10 +182,10 @@ public class Model {
 
   /**
    * Checks if the board is full of discs i.e no space is left to make a move
-   * 
+   * Note: Should be private function , but made Default for Testing
    * @return
    */
-  private boolean isBordFull() {
+  boolean isBordFull() {
     for (int i = 0; i < ModelConstants.ROWS; i++) {
       for (int j = 0; j < ModelConstants.COLS; j++) {
         if (board[i][j] == null) {
@@ -219,12 +219,12 @@ public class Model {
 
   /**
    * Check if the player has won the game Diagonally
-   * 
+   * Note: Should be private , but made default for testing!!
    * @param row
    * @param column
    * @return
    */
-  private boolean didWinDiagonallyTopRightToLeftDown(int row, int column) {
+  boolean didWinDiagonallyTopRightToLeftDown(int row, int column) {
     int len = 0;
     Color colorAtCheckPost = board[row][column];
     // Go towards top right from the current position
@@ -251,12 +251,12 @@ public class Model {
 
   /**
    * Check if the player has won the game Diagonally
-   * 
+   * Note: Should be private , but made default for testing!!
    * @param row
    * @param column
    * @return
    */
-  private boolean didWinDiagonallyTopLeftToRightDown(int row, int column) {
+  boolean didWinDiagonallyTopLeftToRightDown(int row, int column) {
     int len = 0;
     Color colorAtCheckPost = board[row][column];
     // Go towards top left from the current position
@@ -283,12 +283,12 @@ public class Model {
 
   /**
    * Check if the player has won the game Vertically
-   * 
+   * Note: Should be private , but made default for testing!!
    * @param row
    * @param column
    * @return
    */
-  private boolean didWinVertically(int row, int column) {
+  boolean didWinVertically(int row, int column) {
     int len = 0;
     int i = row;
     Color colorAtCheckPos = board[row][column];
@@ -313,12 +313,12 @@ public class Model {
 
   /**
    * Check if the player has won the game Horizontally
-   * 
+   * Note: Should be private , but made default for testing!!
    * @param row
    * @param column
    * @return
    */
-  private boolean didWinHorizontally(int row, int column) {
+  boolean didWinHorizontally(int row, int column) {
     int len = 0;
     int i = column;
     Color colorAtCheckPos = board[row][column];
@@ -455,5 +455,12 @@ public class Model {
    */
   void putDiscAtPosInBoardForTesting(int row , int column , Color color){
     this.board[row][column]= color;
+  }
+  
+  /**
+   * This method is used for unit tests only
+   */
+  Color getColorAtPosFromBoardForTesting(int row,int column){
+    return this.board[row][column];
   }
 }
