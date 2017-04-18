@@ -292,7 +292,6 @@ public class Model {
       i--;
       len++;
     }
-
     if (len >= ModelConstants.winLength) {
       return true;
     }
@@ -322,7 +321,6 @@ public class Model {
       i--;
       len++;
     }
-
     if (len >= ModelConstants.winLength) {
       return true;
     }
