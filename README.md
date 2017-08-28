@@ -1,4 +1,3 @@
-Repository for the Course at NYU
-PRODUCTION QUALITY SOFTWARE
+Production Level Quality Software code 
 
 TODO: Update the Specific Projects
